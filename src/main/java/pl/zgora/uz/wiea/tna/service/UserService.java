@@ -17,7 +17,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public List<User> fetchAllUser() {
+    public List<User> fetchAllUsers() {
         final List<UserEntity> userEntities = userRepository.findAll();
         final List<User> users = userEntities.stream()
                 .map(UserUtils::mapUserEntityToUser)
