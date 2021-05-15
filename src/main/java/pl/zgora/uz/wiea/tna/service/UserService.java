@@ -32,4 +32,18 @@ public class UserService {
         final User user = UserUtils.mapUserEntityToUser(userEntity);
         return user;
     }
+
+    public User createUser(final User user) {
+        UserEntity userEntity = UserUtils.mapUserToUserEntity(user);
+        UserEntity saved = userRepository.saveAndFlush(userEntity);
+        return UserUtils.mapUserEntityToUser(saved);
+    }
+
+
+    public void deleteUser(long id) {
+        UserEntity userEntity = userRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+
+        userRepository.delete(userEntity);
+    }
 }
