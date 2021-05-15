@@ -64,7 +64,7 @@ echo "export MYSQL_PASSWORD=yourpassword" >> ~/.profile
 ### First run
 Clone repository:  
 ```sh
-git clone https://github.com/monaboiste/url-shortener.git
+git clone https://github.com/monaboiste/tna-system-backend.git
 ```  
 Run MySQL Server:
 ```sh
