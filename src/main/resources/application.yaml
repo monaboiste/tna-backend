@@ -17,5 +17,5 @@ server:
     servlet:
         context-path: /api
     error:
-      include-exception: true
-      include-message: always
+        include-exception: true
+        include-message: always

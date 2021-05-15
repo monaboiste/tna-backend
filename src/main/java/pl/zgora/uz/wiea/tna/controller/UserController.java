@@ -1,6 +1,7 @@
 package pl.zgora.uz.wiea.tna.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.zgora.uz.wiea.tna.model.User;
 import pl.zgora.uz.wiea.tna.service.UserService;
