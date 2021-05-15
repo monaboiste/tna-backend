@@ -1,5 +1,6 @@
 package pl.zgora.uz.wiea.tna.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 @Getter
@@ -11,5 +12,7 @@ public class User {
 
     private long id;
     private String username;
+
+    @JsonIgnore
     private String password;
 }
