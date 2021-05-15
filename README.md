@@ -55,11 +55,13 @@ Windows (requires administrator):
 ```sh
 setx MYSQL_USER "yourusername" /M
 setx MYSQL_USER "yourpassword" /M
+setx TNA_ADMIN_PASSWORD "admin" /M
 ```
 or, on Linux:
 ```sh
 echo "export MYSQL_USER=yourusername" >> ~/.profile
 echo "export MYSQL_PASSWORD=yourpassword" >> ~/.profile
+echo "export TNA_ADMIN_PASSWORD=admin" >> ~/.profile
 ```
 ### First run
 Clone repository:  

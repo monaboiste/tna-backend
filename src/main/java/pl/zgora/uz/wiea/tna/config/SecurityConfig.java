@@ -2,6 +2,7 @@ package pl.zgora.uz.wiea.tna.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,6 +23,9 @@ import pl.zgora.uz.wiea.tna.security.CustomUserDetailsService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Value("${app.ADMIN_PASSWORD}")
+    String adminPassword;
+
     private final CustomUserDetailsService userDetailsService;
 
     @Override
@@ -35,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Provide default in-memory admin user
         auth.inMemoryAuthentication()
                 .withUser("admin")
-                .password(passwordEncoder().encode("admin"))
+                .password(passwordEncoder().encode(adminPassword))
                 .credentialsExpired(false)
                 .accountExpired(false)
                 .accountLocked(false)

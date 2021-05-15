@@ -1,4 +1,7 @@
 ### Application
+app:
+    ADMIN_PASSWORD: ${TNA_ADMIN_PASSWORD}
+
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
