@@ -11,7 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import pl.zgora.uz.wiea.tna.security.CustomUserDetailsService;
-import pl.zgora.uz.wiea.tna.security.RestBasicAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -30,14 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilter(new RestBasicAuthenticationFilter(
-                        authenticationManager(), userDetailsService()));
+                .httpBasic();
     }
 
     @Bean
