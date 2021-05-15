@@ -1,5 +1,6 @@
 package pl.zgora.uz.wiea.tna.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -9,7 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 public class User {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private long id;
+
+    @JsonProperty
     private String username;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 }

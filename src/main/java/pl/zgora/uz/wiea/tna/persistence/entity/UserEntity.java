@@ -1,5 +1,6 @@
 package pl.zgora.uz.wiea.tna.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,4 +23,8 @@ public class UserEntity {
 
     @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

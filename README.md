@@ -55,11 +55,13 @@ Windows (requires administrator):
 ```sh
 setx MYSQL_USER "yourusername" /M
 setx MYSQL_USER "yourpassword" /M
+setx TNA_ADMIN_PASSWORD "admin" /M
 ```
 or, on Linux:
 ```sh
 echo "export MYSQL_USER=yourusername" >> ~/.profile
 echo "export MYSQL_PASSWORD=yourpassword" >> ~/.profile
+echo "export TNA_ADMIN_PASSWORD=admin" >> ~/.profile
 ```
 ### First run
 Clone repository:  
@@ -80,6 +82,7 @@ Then cd into ``url-shortener`` directory and execute:
 ./gradlew :bootRun -Dspring.config.location="startup.yaml"
 ```
 **COMMAND ABOVE WILL DROP tna DATABASE**, so execute it only if you run the application first time!
+System provides default in-memory ``admin`` user with password ``admin``.
 
 Gradle should build project and start Tomcat Server on your localhost. Base URL of Web Api: [http://localhost:8080/api](http://localhost:8080/api).
   
