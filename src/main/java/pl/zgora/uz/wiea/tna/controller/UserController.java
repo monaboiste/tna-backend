@@ -26,11 +26,13 @@ public class UserController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     User createUser(@RequestBody final User user){
         return userService.createUser(user);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     void deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);
     }
