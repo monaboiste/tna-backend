@@ -80,6 +80,7 @@ Then cd into ``url-shortener`` directory and execute:
 ./gradlew :bootRun -Dspring.config.location="startup.yaml"
 ```
 **COMMAND ABOVE WILL DROP tna DATABASE**, so execute it only if you run the application first time!
+Startup config will also create default ``admin`` user with password ``admin``.
 
 Gradle should build project and start Tomcat Server on your localhost. Base URL of Web Api: [http://localhost:8080/api](http://localhost:8080/api).
   
