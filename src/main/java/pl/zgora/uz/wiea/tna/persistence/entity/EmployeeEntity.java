@@ -18,16 +18,16 @@ public class EmployeeEntity {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "firstname", nullable = true)
+    @Column(name = "firstname", nullable = false)
     private String firstname;
 
-    @Column(name = "lastname", nullable = true)
+    @Column(name = "lastname", nullable = false)
     private String lastname;
 
-    @Column(name = "department", nullable = true)
+    @Column(name = "department", nullable = false)
     private String department;
 
-    @Column(name = "contract_id", unique = true, nullable = true)
+    @Column(name = "contract_id", unique = true, nullable = false)
     private String contractId;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -8,14 +8,20 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Employee {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @JsonProperty
-    private String username;
+    private String firstname;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String password;
+    @JsonProperty
+    private String lastname;
+
+    @JsonProperty
+    private String department;
+
+    @JsonProperty
+    private String contractId;
 }
