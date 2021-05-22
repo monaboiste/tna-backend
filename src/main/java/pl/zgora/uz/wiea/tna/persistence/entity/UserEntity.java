@@ -1,5 +1,6 @@
 package pl.zgora.uz.wiea.tna.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -15,11 +16,16 @@ public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
-    @Column(name = "username", unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = true)
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = true)
     private String password;
+
+    @Column(name = "role", nullable = true)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 }

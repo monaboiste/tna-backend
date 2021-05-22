@@ -9,5 +9,4 @@ public class TnaApplication {
     public static void main(String[] args) {
         SpringApplication.run(TnaApplication.class, args);
     }
-
 }
