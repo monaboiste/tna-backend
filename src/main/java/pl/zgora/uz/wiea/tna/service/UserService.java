@@ -22,26 +22,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public List<User> fetchAllUsers() {
-        final List<UserEntity> userEntities = userRepository.findAll();
-        final List<User> users = userEntities.stream()
-                .map(UserUtils::mapUserEntityToUser)
-                .collect(Collectors.toList());
-        return users;
+    public List<UserEntity> fetchAllUsers() {
+        return userRepository.findAll();
     }
 
-    public User fetchUserById(long id) {
-        final UserEntity userEntity = userRepository.findById(id)
+    public UserEntity fetchUserById(long id) {
+        return userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
-
-        final User user = UserUtils.mapUserEntityToUser(userEntity);
-        return user;
     }
 
     @Transactional
-    public User createUser(final User user) {
-        UserEntity userEntity = UserUtils.mapUserToUserEntity(user);
-
+    public UserEntity createUser(final UserEntity userEntity) {
         if (userRepository.existsByUsername(userEntity.getUsername())) {
             throw new UserConstraintViolationException();
         }
@@ -49,8 +40,7 @@ public class UserService {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userEntity.setRole(Role.USER);
 
-        final UserEntity saved = userRepository.saveAndFlush(userEntity);
-        return UserUtils.mapUserEntityToUser(saved);
+        return userRepository.saveAndFlush(userEntity);
     }
 
 
