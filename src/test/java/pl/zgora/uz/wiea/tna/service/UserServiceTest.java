@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.ActiveProfiles;
 import pl.zgora.uz.wiea.tna.model.User;
+import pl.zgora.uz.wiea.tna.persistence.entity.Role;
 import pl.zgora.uz.wiea.tna.persistence.entity.UserEntity;
 import pl.zgora.uz.wiea.tna.persistence.repository.UserRepository;
 
@@ -31,16 +32,23 @@ class UserServiceTest {
 
     @Test
     void shouldFetchAllUsers() {
-        final List<UserEntity> userEntities = Arrays.asList(new UserEntity(1L, "test1", "test1"));
-        given(userRepository.findAll()).willReturn(userEntities);
+        final List<UserEntity> expected = Arrays.asList(
+                UserEntity.builder()
+                        .id(1L)
+                        .username("sample")
+                        .password("sample")
+                        .role(Role.USER)
+                        .build()
+        );
+        given(userRepository.findAll()).willReturn(expected);
 
-        List<User> users = userService.fetchAllUsers();
+        List<UserEntity> actual = userService.fetchAllUsers();
 
         assertAll(
-                () -> assertEquals(userEntities.size(), users.size()),
-                () -> assertEquals(userEntities.get(0).getId(), users.get(0).getId()),
-                () -> assertEquals(userEntities.get(0).getUsername(), users.get(0).getUsername()),
-                () -> assertEquals(userEntities.get(0).getPassword(), users.get(0).getPassword())
+                () -> assertEquals(expected.size(), actual.size()),
+                () -> assertEquals(expected.get(0).getId(), actual.get(0).getId()),
+                () -> assertEquals(expected.get(0).getUsername(), actual.get(0).getUsername()),
+                () -> assertEquals(expected.get(0).getPassword(), actual.get(0).getPassword())
         );
         verify(userRepository, times(1)).findAll();
     }
@@ -48,15 +56,20 @@ class UserServiceTest {
     @Test
     void shouldFetchUserById() {
         final long id = 1L;
-        final UserEntity userEntity = new UserEntity(id, "test1", "test1");
-        given(userRepository.findById(id)).willReturn(Optional.of(userEntity));
+        final UserEntity expected = UserEntity.builder()
+                .id(id)
+                .username("sample")
+                .password("sample")
+                .role(Role.USER)
+                .build();
+        given(userRepository.findById(id)).willReturn(Optional.of(expected));
 
-        final User user = userService.fetchUserById(id);
+        final UserEntity actual = userService.fetchUserById(id);
 
         assertAll(
-                () -> assertEquals(userEntity.getId(), user.getId()),
-                () -> assertEquals(userEntity.getUsername(), user.getUsername()),
-                () -> assertEquals(userEntity.getPassword(), user.getPassword())
+                () -> assertEquals(expected.getId(), actual.getId()),
+                () -> assertEquals(expected.getUsername(), actual.getUsername()),
+                () -> assertEquals(expected.getPassword(), actual.getPassword())
         );
         verify(userRepository, times(1)).findById(id);
     }
