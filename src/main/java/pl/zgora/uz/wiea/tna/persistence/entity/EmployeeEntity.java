@@ -1,8 +1,8 @@
 package pl.zgora.uz.wiea.tna.persistence.entity;
 
 import lombok.*;
+
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "employee")
@@ -36,5 +36,8 @@ public class EmployeeEntity {
 
     @Column(name = "city", nullable = false)
     private String city;
+
+    @Column(name = "contract_id", unique = true, nullable = false)
+    private String contractId;
 }
 

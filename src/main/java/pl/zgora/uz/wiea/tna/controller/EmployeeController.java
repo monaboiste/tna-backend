@@ -3,8 +3,9 @@ package pl.zgora.uz.wiea.tna.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.zgora.uz.wiea.tna.model.Employee;
-import pl.zgora.uz.wiea.tna.model.User;
+import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 import pl.zgora.uz.wiea.tna.service.EmployeeService;
+import pl.zgora.uz.wiea.tna.util.EmployeeUtils;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class EmployeeController {
     @PostMapping
     Employee createEmployee(@RequestBody final Employee employee)
     {
-        return employeeService.createEmployee(employee);
+        final EmployeeEntity employeeEntity = employeeService
+                .createEmployee(EmployeeUtils.mapEmployeeToEmployeeEntity(employee));
+        return EmployeeUtils.mapEmployeeEntityToEmployee(employeeEntity);
     }
 }
