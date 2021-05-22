@@ -19,18 +19,16 @@ public class UserService {
 
     public List<User> fetchAllUsers() {
         final List<UserEntity> userEntities = userRepository.findAll();
-        final List<User> users = userEntities.stream()
+        return userEntities.stream()
                 .map(UserUtils::mapUserEntityToUser)
                 .collect(Collectors.toList());
-        return users;
     }
 
     public User fetchUserById(long id) {
         final UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
 
-        final User user = UserUtils.mapUserEntityToUser(userEntity);
-        return user;
+        return UserUtils.mapUserEntityToUser(userEntity);
     }
 
     public User createUser(final User user) {
@@ -38,7 +36,6 @@ public class UserService {
         UserEntity saved = userRepository.saveAndFlush(userEntity);
         return UserUtils.mapUserEntityToUser(saved);
     }
-
 
     public void deleteUser(long id) {
         UserEntity userEntity = userRepository.findById(id)
