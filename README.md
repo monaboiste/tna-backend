@@ -79,18 +79,12 @@ sudo /etc/init.d/mysql start
 
 Then cd into ``url-shortener`` directory and execute:  
 ```sh
-./gradlew :bootRun -Dspring.config.location="startup.yaml"
+./gradlew :bootRun
 ```
-**COMMAND ABOVE WILL DROP tna DATABASE**, so execute it only if you run the application first time!
 System provides default in-memory ``admin`` user with password ``admin``.
 
 Gradle should build project and start Tomcat Server on your localhost. Base URL of Web Api: [http://localhost:8080/api](http://localhost:8080/api).
   
-From now on you can build and run application with:
-```sh
-./gradlew :bootRun
-```  
-
 #### Tests
 Run unit tests:
 ```sh
