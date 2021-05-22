@@ -49,13 +49,14 @@ public class UserService {
         userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userEntity.setRole(Role.USER);
 
-        UserEntity saved = userRepository.saveAndFlush(userEntity);
+        final UserEntity saved = userRepository.saveAndFlush(userEntity);
         return UserUtils.mapUserEntityToUser(saved);
     }
 
 
+    @Transactional
     public void deleteUser(long id) {
-        UserEntity userEntity = userRepository.findById(id)
+        final UserEntity userEntity = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
 
         userRepository.delete(userEntity);
