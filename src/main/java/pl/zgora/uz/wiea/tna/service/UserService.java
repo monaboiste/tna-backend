@@ -43,7 +43,6 @@ public class UserService {
         return userRepository.saveAndFlush(userEntity);
     }
 
-
     @Transactional
     public void deleteUser(long id) {
         final UserEntity userEntity = userRepository.findById(id)

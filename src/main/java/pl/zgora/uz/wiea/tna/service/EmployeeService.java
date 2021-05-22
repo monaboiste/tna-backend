@@ -3,12 +3,13 @@ package pl.zgora.uz.wiea.tna.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
-import pl.zgora.uz.wiea.tna.persistence.entity.Role;
 import pl.zgora.uz.wiea.tna.persistence.entity.UserEntity;
 import pl.zgora.uz.wiea.tna.persistence.repository.EmployeeRepository;
+import pl.zgora.uz.wiea.tna.service.exception.UserNotFoundException;
 import pl.zgora.uz.wiea.tna.util.StringUtils;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,15 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
     private final UserService userService;
+
+    public List<EmployeeEntity> fetchAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    public EmployeeEntity fetchEmployeeById(long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
+    }
 
     @Transactional
     public EmployeeEntity createEmployee(final EmployeeEntity employeeEntity) {
@@ -36,8 +46,8 @@ public class EmployeeService {
     }
 
     private String generateDefaultUsername(final EmployeeEntity employeeEntity) {
-        final String lastname = employeeEntity.getLastname().toLowerCase();
         final char firstLetterOfName = employeeEntity.getFirstname().toLowerCase().charAt(0);
+        final String lastname = employeeEntity.getLastname().split(" ")[0].toLowerCase();
         final String lastThreeContractNumbers = employeeEntity.getContractId()
                 .substring(employeeEntity.getContractId().length() - 3);
 
