@@ -1,6 +1,7 @@
 package pl.zgora.uz.wiea.tna.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -45,6 +46,8 @@ public class UserControllerIntegrationTest {
     void setUp(@Autowired final DataSource dataSource,
                @Autowired final WebApplicationContext webApplicationContext) {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+
+        objectMapper.disable(MapperFeature.USE_ANNOTATIONS);
 
         try (Connection conn = dataSource.getConnection()) {
             // you'll have to make sure conn.autoCommit = true (default for e.g. H2)
