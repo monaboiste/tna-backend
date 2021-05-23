@@ -30,7 +30,7 @@ public class EmployeeEntity {
     @Column(name = "contract_id", unique = true, nullable = false)
     private String contractId;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
 }
