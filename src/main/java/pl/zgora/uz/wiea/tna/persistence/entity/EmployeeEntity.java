@@ -14,9 +14,8 @@ import javax.persistence.*;
 public class EmployeeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private Long id;
+    @Column(name = "user_id", unique = true, nullable = false)
+    private Long userId;
 
     @Column(name = "firstname", nullable = false)
     private String firstname;
@@ -31,6 +30,7 @@ public class EmployeeEntity {
     private String contractId;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @MapsId
     @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
 }

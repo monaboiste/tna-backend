@@ -6,4 +6,6 @@ import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
+
+    boolean existsByContractId(String contractId);
 }

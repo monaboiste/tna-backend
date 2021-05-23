@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.UserEntity;
 import pl.zgora.uz.wiea.tna.persistence.repository.EmployeeRepository;
+import pl.zgora.uz.wiea.tna.service.exception.ContractIdViolationException;
 import pl.zgora.uz.wiea.tna.service.exception.UserNotFoundException;
 import pl.zgora.uz.wiea.tna.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,7 @@ public class EmployeeService {
 
     @Transactional
     public EmployeeEntity createEmployee(final EmployeeEntity employeeEntity) {
+        validateContractId(employeeEntity.getContractId());
         reformatFields(employeeEntity);
 
         final String username = generateDefaultUsername(employeeEntity);
@@ -40,7 +43,6 @@ public class EmployeeService {
                 .build();
         final UserEntity savedUserEntity = userService.createUser(userEntity);
         employeeEntity.setUserEntity(savedUserEntity);
-
 
         return employeeRepository.saveAndFlush(employeeEntity);
     }
@@ -63,5 +65,14 @@ public class EmployeeService {
         employeeEntity.setFirstname(StringUtils.toTitleCase(employeeEntity.getFirstname()));
         employeeEntity.setLastname(StringUtils.toTitleCase(employeeEntity.getLastname()));
         employeeEntity.setContractId(employeeEntity.getContractId().toUpperCase());
+    }
+
+    @Transactional
+    protected void validateContractId(final String contractId) {
+        if (Objects.isNull(contractId) ||
+            contractId.length() < 3 ||
+            employeeRepository.existsByContractId(contractId)) {
+            throw new ContractIdViolationException();
+        }
     }
 }

@@ -1,6 +1,5 @@
 package pl.zgora.uz.wiea.tna.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
