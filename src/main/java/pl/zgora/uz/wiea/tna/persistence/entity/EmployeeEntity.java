@@ -5,7 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "employees")
 @Getter
 @Setter
 @Builder
@@ -14,30 +14,32 @@ import javax.persistence.*;
 public class EmployeeEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    private long id;
+    @Column(name = "user_id", unique = true, nullable = false)
+    private Long userId;
 
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
-
-    @Column(name = "first_name", updatable = false, nullable = false)
+    @Column(name = "firstname", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", updatable = false, nullable = false)
+    @Column(name = "lastname", nullable = false)
     private String lastName;
 
-    @Column(name = "street", nullable = false)
-    private String street;
-
-    @Column(name = "post_code", nullable = false)
-    private String postCode;
-
-    @Column(name = "city", nullable = false)
-    private String city;
+    @Column(name = "department", nullable = false)
+    private String department;
 
     @Column(name = "contract_id", unique = true, nullable = false)
     private String contractId;
-}
 
+    @Column(name = "street", nullable = true)
+    private String street;
+
+    @Column(name = "post_code", nullable = true)
+    private String postCode;
+
+    @Column(name = "city", nullable = true)
+    private String city;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @MapsId
+    @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
+    private UserEntity userEntity;
+}

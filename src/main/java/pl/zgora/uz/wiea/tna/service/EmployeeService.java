@@ -2,35 +2,36 @@ package pl.zgora.uz.wiea.tna.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.zgora.uz.wiea.tna.model.Employee;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.UserEntity;
 import pl.zgora.uz.wiea.tna.persistence.repository.EmployeeRepository;
-import pl.zgora.uz.wiea.tna.util.EmployeeUtils;
+import pl.zgora.uz.wiea.tna.service.exception.ContractIdViolationException;
+import pl.zgora.uz.wiea.tna.service.exception.UserNotFoundException;
 import pl.zgora.uz.wiea.tna.util.StringUtils;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
-
     private final UserService userService;
 
-    public List<Employee> fetchAllEmployees() {
-        final List<EmployeeEntity> employeeEntities = employeeRepository
-                .findAll();
-        return employeeEntities.stream()
-                .map(EmployeeUtils::mapEmployeeEntityToEmployee)
-                .collect(Collectors.toList());
+    public List<EmployeeEntity> fetchAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    public EmployeeEntity fetchEmployeeById(long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Transactional
     public EmployeeEntity createEmployee(final EmployeeEntity employeeEntity) {
+        validateContractId(employeeEntity.getContractId());
         reformatFields(employeeEntity);
 
         final String username = generateDefaultUsername(employeeEntity);
@@ -41,8 +42,7 @@ public class EmployeeService {
                 .password(password)
                 .build();
         final UserEntity savedUserEntity = userService.createUser(userEntity);
-        employeeEntity.setUser(savedUserEntity);
-
+        employeeEntity.setUserEntity(savedUserEntity);
 
         return employeeRepository.saveAndFlush(employeeEntity);
     }
@@ -65,5 +65,14 @@ public class EmployeeService {
         employeeEntity.setFirstName(StringUtils.toTitleCase(employeeEntity.getFirstName()));
         employeeEntity.setLastName(StringUtils.toTitleCase(employeeEntity.getLastName()));
         employeeEntity.setContractId(employeeEntity.getContractId().toUpperCase());
+    }
+
+    @Transactional
+    protected void validateContractId(final String contractId) {
+        if (Objects.isNull(contractId)
+                || contractId.length() < 3
+                || employeeRepository.existsByContractId(contractId)) {
+            throw new ContractIdViolationException();
+        }
     }
 }

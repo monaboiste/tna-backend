@@ -8,6 +8,7 @@ import pl.zgora.uz.wiea.tna.service.EmployeeService;
 import pl.zgora.uz.wiea.tna.util.EmployeeUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,14 +19,23 @@ public class EmployeeController {
 
     @GetMapping
     List<Employee> fetchAllEmployees() {
-        return employeeService.fetchAllEmployees();
+        final List<EmployeeEntity> employeeEntities = employeeService.fetchAllEmployees();
+        final List<Employee> employees = employeeEntities.stream()
+                .map(EmployeeUtils::mapEmployeeEntityToEmployee)
+                .collect(Collectors.toList());
+        return employees;
+    }
+
+    @GetMapping("/{id}")
+    Employee fetchEmployeeById(@PathVariable("id") long id) {
+        final EmployeeEntity employeeEntity = employeeService.fetchEmployeeById(id);
+        return EmployeeUtils.mapEmployeeEntityToEmployee(employeeEntity);
     }
 
     @PostMapping
-    Employee createEmployee(@RequestBody final Employee employee)
-    {
-        final EmployeeEntity employeeEntity = employeeService
-                .createEmployee(EmployeeUtils.mapEmployeeToEmployeeEntity(employee));
+    Employee createEmployee(@RequestBody final Employee employee) {
+        final EmployeeEntity employeeEntity = employeeService.createEmployee(
+                EmployeeUtils.mapEmployeeToEntity(employee));
         return EmployeeUtils.mapEmployeeEntityToEmployee(employeeEntity);
     }
 }

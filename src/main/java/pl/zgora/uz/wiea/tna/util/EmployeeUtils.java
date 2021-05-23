@@ -1,16 +1,19 @@
 package pl.zgora.uz.wiea.tna.util;
 
-
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import pl.zgora.uz.wiea.tna.model.Employee;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmployeeUtils {
 
-    static public Employee mapEmployeeEntityToEmployee(final EmployeeEntity employeeEntity){
+    static public Employee mapEmployeeEntityToEmployee(final EmployeeEntity employeeEntity) {
         return Employee.builder()
-                .id(employeeEntity.getId())
+                .id(employeeEntity.getUserId())
                 .firstName(employeeEntity.getFirstName())
                 .lastName(employeeEntity.getLastName())
+                .department(employeeEntity.getDepartment())
                 .street(employeeEntity.getStreet())
                 .postCode(employeeEntity.getPostCode())
                 .city(employeeEntity.getCity())
@@ -18,11 +21,12 @@ public class EmployeeUtils {
                 .build();
     }
 
-    static public EmployeeEntity mapEmployeeToEmployeeEntity(final Employee employee){
+    static public EmployeeEntity mapEmployeeToEntity(final Employee employee) {
         return EmployeeEntity.builder()
-                .id(employee.getId())
+                .userId(employee.getId())
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
+                .department(employee.getDepartment())
                 .street(employee.getStreet())
                 .postCode(employee.getPostCode())
                 .city(employee.getCity())
