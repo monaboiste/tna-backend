@@ -11,9 +11,12 @@ public class EmployeeUtils {
     static public Employee mapEmployeeEntityToEmployee(final EmployeeEntity employeeEntity) {
         return Employee.builder()
                 .id(employeeEntity.getUserId())
-                .firstname(employeeEntity.getFirstname())
-                .lastname(employeeEntity.getLastname())
+                .firstName(employeeEntity.getFirstName())
+                .lastName(employeeEntity.getLastName())
                 .department(employeeEntity.getDepartment())
+                .street(employeeEntity.getStreet())
+                .postCode(employeeEntity.getPostCode())
+                .city(employeeEntity.getCity())
                 .contractId(employeeEntity.getContractId())
                 .build();
     }
@@ -21,9 +24,12 @@ public class EmployeeUtils {
     static public EmployeeEntity mapEmployeeToEntity(final Employee employee) {
         return EmployeeEntity.builder()
                 .userId(employee.getId())
-                .firstname(employee.getFirstname())
-                .lastname(employee.getLastname())
+                .firstName(employee.getFirstName())
+                .lastName(employee.getLastName())
                 .department(employee.getDepartment())
+                .street(employee.getStreet())
+                .postCode(employee.getPostCode())
+                .city(employee.getCity())
                 .contractId(employee.getContractId())
                 .build();
     }

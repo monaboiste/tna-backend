@@ -18,16 +18,25 @@ public class EmployeeEntity {
     private Long userId;
 
     @Column(name = "firstname", nullable = false)
-    private String firstname;
+    private String firstName;
 
     @Column(name = "lastname", nullable = false)
-    private String lastname;
+    private String lastName;
 
     @Column(name = "department", nullable = false)
     private String department;
 
     @Column(name = "contract_id", unique = true, nullable = false)
     private String contractId;
+
+    @Column(name = "street", nullable = true)
+    private String street;
+
+    @Column(name = "post_code", nullable = true)
+    private String postCode;
+
+    @Column(name = "city", nullable = true)
+    private String city;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @MapsId

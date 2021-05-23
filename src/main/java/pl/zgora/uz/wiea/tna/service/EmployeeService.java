@@ -48,8 +48,8 @@ public class EmployeeService {
     }
 
     private String generateDefaultUsername(final EmployeeEntity employeeEntity) {
-        final char firstLetterOfName = employeeEntity.getFirstname().toLowerCase().charAt(0);
-        final String lastname = employeeEntity.getLastname().split(" ")[0].toLowerCase();
+        final char firstLetterOfName = employeeEntity.getFirstName().toLowerCase().charAt(0);
+        final String lastname = employeeEntity.getLastName().split(" ")[0].toLowerCase();
         final String lastThreeContractNumbers = employeeEntity.getContractId()
                 .substring(employeeEntity.getContractId().length() - 3);
 
@@ -62,16 +62,16 @@ public class EmployeeService {
     }
 
     private void reformatFields(final EmployeeEntity employeeEntity) {
-        employeeEntity.setFirstname(StringUtils.toTitleCase(employeeEntity.getFirstname()));
-        employeeEntity.setLastname(StringUtils.toTitleCase(employeeEntity.getLastname()));
+        employeeEntity.setFirstName(StringUtils.toTitleCase(employeeEntity.getFirstName()));
+        employeeEntity.setLastName(StringUtils.toTitleCase(employeeEntity.getLastName()));
         employeeEntity.setContractId(employeeEntity.getContractId().toUpperCase());
     }
 
     @Transactional
     protected void validateContractId(final String contractId) {
-        if (Objects.isNull(contractId) ||
-            contractId.length() < 3 ||
-            employeeRepository.existsByContractId(contractId)) {
+        if (Objects.isNull(contractId)
+                || contractId.length() < 3
+                || employeeRepository.existsByContractId(contractId)) {
             throw new ContractIdViolationException();
         }
     }
