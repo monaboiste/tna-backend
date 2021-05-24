@@ -11,7 +11,7 @@ import lombok.*;
 public class User {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private long id;
+    private Long id;
 
     @JsonProperty
     private String username;

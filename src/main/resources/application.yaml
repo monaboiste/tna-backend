@@ -5,7 +5,7 @@ app:
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/tna
+        url: jdbc:mysql://localhost:3306/tna?serverTimezone=UTC
         username: ${MYSQL_USER}
         password: ${MYSQL_PASSWORD}
     jpa:
