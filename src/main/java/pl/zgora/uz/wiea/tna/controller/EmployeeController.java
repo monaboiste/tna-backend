@@ -20,7 +20,7 @@ public class EmployeeController {
     @GetMapping
     List<Employee> fetchAllEmployees() {
         final List<EmployeeEntity> employeeEntities = employeeService.fetchAllEmployees();
-        final List<Employee> employees = employeeEntities.stream()
+        final List<Employee> employees = employeeEntities.parallelStream()
                 .map(EmployeeUtils::mapEmployeeEntityToEmployee)
                 .collect(Collectors.toList());
         return employees;

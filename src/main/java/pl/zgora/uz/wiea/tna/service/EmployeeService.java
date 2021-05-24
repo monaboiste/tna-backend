@@ -2,6 +2,7 @@ package pl.zgora.uz.wiea.tna.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.UserEntity;
 import pl.zgora.uz.wiea.tna.persistence.repository.EmployeeRepository;
@@ -9,7 +10,6 @@ import pl.zgora.uz.wiea.tna.service.exception.ContractIdViolationException;
 import pl.zgora.uz.wiea.tna.service.exception.UserNotFoundException;
 import pl.zgora.uz.wiea.tna.util.StringUtils;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,10 +20,12 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final UserService userService;
 
+    @Transactional(readOnly = true)
     public List<EmployeeEntity> fetchAllEmployees() {
         return employeeRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public EmployeeEntity fetchEmployeeById(long id) {
         return employeeRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
@@ -67,8 +69,7 @@ public class EmployeeService {
         employeeEntity.setContractId(employeeEntity.getContractId().toUpperCase());
     }
 
-    @Transactional
-    protected void validateContractId(final String contractId) {
+    private void validateContractId(final String contractId) {
         if (Objects.isNull(contractId)
                 || contractId.length() < 3
                 || employeeRepository.existsByContractId(contractId)) {
