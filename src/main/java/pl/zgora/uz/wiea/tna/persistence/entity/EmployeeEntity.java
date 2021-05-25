@@ -3,6 +3,7 @@ package pl.zgora.uz.wiea.tna.persistence.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
@@ -39,7 +40,14 @@ public class EmployeeEntity {
     private String city;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @MapsId
+    @MapsId(value = "user_id")
     @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
+
+    @ManyToMany
+    @JoinTable(
+            name = "employee_attendance_records",
+            joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "attendance_record_id", referencedColumnName = "id"))
+    private List<AttendanceRecordEntity> attendanceRecords;
 }
