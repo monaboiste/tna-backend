@@ -20,14 +20,12 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final UserService userService;
 
-    @Transactional(readOnly = true)
     public List<EmployeeEntity> fetchAllEmployees() {
         return employeeRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
-    public EmployeeEntity fetchEmployeeById(long id) {
-        return employeeRepository.findById(id)
+    public EmployeeEntity fetchEmployeeById(long employeeId) {
+        return employeeRepository.findById(employeeId)
                 .orElseThrow(UserNotFoundException::new);
     }
 

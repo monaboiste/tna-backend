@@ -12,6 +12,7 @@ import pl.zgora.uz.wiea.tna.persistence.repository.ShiftRepository;
 import pl.zgora.uz.wiea.tna.service.exception.ShiftNotFoundException;
 import pl.zgora.uz.wiea.tna.service.exception.UserNotFoundException;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -38,6 +39,14 @@ public class AttendanceRecordService {
         attendanceRecordEntity.setShiftEntity(shiftEntity);
 
         return attendanceRecordRepository.saveAndFlush(attendanceRecordEntity);
+    }
+
+    public List<AttendanceRecordEntity> fetchAllAttendanceRecordsByEmployeeId(final long employeeId) {
+        return attendanceRecordRepository.findByEmployeeEntityId(employeeId);
+    }
+
+    public List<AttendanceRecordEntity> fetchAllAttendanceRecords() {
+        return attendanceRecordRepository.findAll();
     }
 
     private long calculateElapsedTimePerShift(final AttendanceRecordEntity attendanceRecordEntity) {
