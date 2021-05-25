@@ -10,7 +10,7 @@ public class EmployeeUtils {
 
     static public Employee mapEmployeeEntityToEmployee(final EmployeeEntity employeeEntity) {
         return Employee.builder()
-                .id(employeeEntity.getUserId())
+                .id(employeeEntity.getId())
                 .firstName(employeeEntity.getFirstName())
                 .lastName(employeeEntity.getLastName())
                 .department(employeeEntity.getDepartment())
@@ -23,7 +23,7 @@ public class EmployeeUtils {
 
     static public EmployeeEntity mapEmployeeToEntity(final Employee employee) {
         return EmployeeEntity.builder()
-                .userId(employee.getId())
+                .id(employee.getId())
                 .firstName(employee.getFirstName())
                 .lastName(employee.getLastName())
                 .department(employee.getDepartment())

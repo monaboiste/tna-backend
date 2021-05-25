@@ -14,9 +14,13 @@ import java.util.List;
 @AllArgsConstructor
 public class EmployeeEntity {
 
+    /**
+     * Shares PK with {@link UserEntity}
+     * See: {@link UserEntity#getId()}
+     */
     @Id
-    @Column(name = "user_id", unique = true, nullable = false)
-    private Long userId;
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @Column(name = "firstname", nullable = false)
     private String firstName;
@@ -42,7 +46,7 @@ public class EmployeeEntity {
     @MapsId
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
+    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "employeeEntity")

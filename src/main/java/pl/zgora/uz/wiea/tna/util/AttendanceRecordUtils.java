@@ -14,7 +14,7 @@ public class AttendanceRecordUtils {
             final AttendanceRecordEntity attendanceRecordEntity) {
         return AttendanceRecord.builder()
                 .id(attendanceRecordEntity.getId())
-                .employeeId(attendanceRecordEntity.getEmployeeEntity().getUserId())
+                .employeeId(attendanceRecordEntity.getEmployeeEntity().getId())
                 .shiftId(attendanceRecordEntity.getShiftEntity().getId())
                 .enteredAt(attendanceRecordEntity.getEnteredAt())
                 .leftAt(attendanceRecordEntity.getLeftAt())
@@ -25,8 +25,12 @@ public class AttendanceRecordUtils {
     static public AttendanceRecordEntity mapAttendanceRecordToEntity(final AttendanceRecord attendanceRecord) {
         return AttendanceRecordEntity.builder()
                 .id(attendanceRecord.getId())
-                .employeeEntity(EmployeeEntity.builder().userId(attendanceRecord.getEmployeeId()).build())
-                .shiftEntity(ShiftEntity.builder().id(attendanceRecord.getShiftId()).build())
+                .employeeEntity(EmployeeEntity.builder()
+                        .id(attendanceRecord.getEmployeeId())
+                        .build())
+                .shiftEntity(ShiftEntity.builder()
+                        .id(attendanceRecord.getShiftId())
+                        .build())
                 .enteredAt(attendanceRecord.getEnteredAt())
                 .leftAt(attendanceRecord.getLeftAt())
                 .elapsedTimePerShiftInMinutes(attendanceRecord.getElapsedTimePerShiftInMinutes())

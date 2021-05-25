@@ -24,7 +24,7 @@ public class AttendanceRecordService {
 
     @Transactional
     public AttendanceRecordEntity createAttendanceRecord(AttendanceRecordEntity attendanceRecordEntity) {
-        final long employeeId = attendanceRecordEntity.getEmployeeEntity().getUserId();
+        final long employeeId = attendanceRecordEntity.getEmployeeEntity().getId();
         final long shiftId = attendanceRecordEntity.getShiftEntity().getId();
 
         final EmployeeEntity employeeEntity = employeeRepository.findById(employeeId)
