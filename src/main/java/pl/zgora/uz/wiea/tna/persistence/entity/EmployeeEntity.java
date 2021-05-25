@@ -39,11 +39,12 @@ public class EmployeeEntity {
     @Column(name = "city", nullable = true)
     private String city;
 
+    @MapsId
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @MapsId(value = "user_id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "employeeEntity")
-    private List<EmployeeAttendanceRecordEntity> employeeAttendanceRecordEntities;
+    private List<AttendanceRecordEntity> employeeAttendanceRecordEntities;
 }

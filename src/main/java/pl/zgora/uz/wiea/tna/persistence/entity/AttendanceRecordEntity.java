@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "attendance_records")
@@ -20,6 +19,14 @@ public class AttendanceRecordEntity {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "employee_id", referencedColumnName = "user_id")
+    private EmployeeEntity employeeEntity;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "shift_id", referencedColumnName = "id")
+    private ShiftEntity shiftEntity;
+
     @Column(name = "entered_at", nullable = true)
     private OffsetDateTime enteredAt;
 
@@ -27,8 +34,5 @@ public class AttendanceRecordEntity {
     private OffsetDateTime leftAt;
 
     @Transient
-    private Long shiftDurationInHours;
-
-    @OneToMany(mappedBy = "attendanceRecordEntity")
-    private List<EmployeeAttendanceRecordEntity> employeeAttendanceRecordEntities;
+    private Long elapsedTimePerShiftInMinutes;
 }

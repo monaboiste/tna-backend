@@ -32,7 +32,7 @@ public class EmployeeService {
     }
 
     @Transactional
-    public EmployeeEntity createEmployee(final EmployeeEntity employeeEntity) {
+    public EmployeeEntity createEmployee(EmployeeEntity employeeEntity) {
         validateContractId(employeeEntity.getContractId());
         reformatFields(employeeEntity);
 
