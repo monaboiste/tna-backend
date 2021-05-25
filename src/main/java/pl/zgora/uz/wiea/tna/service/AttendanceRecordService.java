@@ -42,11 +42,26 @@ public class AttendanceRecordService {
     }
 
     public List<AttendanceRecordEntity> fetchAllAttendanceRecordsByEmployeeId(final long employeeId) {
-        return attendanceRecordRepository.findByEmployeeEntityId(employeeId);
+        List<AttendanceRecordEntity> attendanceRecordEntities
+                = attendanceRecordRepository.findByEmployeeEntityId(employeeId);
+
+        attendanceRecordEntities.parallelStream()
+                .forEach(e -> {
+                    long elapsedTimePerShift = calculateElapsedTimePerShift(e);
+                    e.setElapsedTimePerShiftInMinutes(elapsedTimePerShift);
+                });
+        return attendanceRecordEntities;
     }
 
     public List<AttendanceRecordEntity> fetchAllAttendanceRecords() {
-        return attendanceRecordRepository.findAll();
+        List<AttendanceRecordEntity> attendanceRecordEntities = attendanceRecordRepository.findAll();
+
+        attendanceRecordEntities.parallelStream()
+                .forEach(e -> {
+                    long elapsedTimePerShift = calculateElapsedTimePerShift(e);
+                    e.setElapsedTimePerShiftInMinutes(elapsedTimePerShift);
+                });
+        return attendanceRecordEntities;
     }
 
     private long calculateElapsedTimePerShift(final AttendanceRecordEntity attendanceRecordEntity) {

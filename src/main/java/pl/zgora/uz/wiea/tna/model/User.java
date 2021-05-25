@@ -2,6 +2,7 @@ package pl.zgora.uz.wiea.tna.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import pl.zgora.uz.wiea.tna.persistence.entity.Role;
 
 @Getter
 @Setter
@@ -18,4 +19,7 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Role role;
 }
