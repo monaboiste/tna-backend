@@ -44,10 +44,6 @@ public class EmployeeEntity {
     @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
 
-    @ManyToMany
-    @JoinTable(
-            name = "employee_attendance_records",
-            joinColumns = @JoinColumn(name = "employee_id", referencedColumnName = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "attendance_record_id", referencedColumnName = "id"))
-    private List<AttendanceRecordEntity> attendanceRecords;
+    @OneToMany(mappedBy = "employeeEntity")
+    private List<EmployeeAttendanceRecordEntity> employeeAttendanceRecordEntities;
 }

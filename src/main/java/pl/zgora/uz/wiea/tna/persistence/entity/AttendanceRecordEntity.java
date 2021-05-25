@@ -29,6 +29,6 @@ public class AttendanceRecordEntity {
     @Transient
     private Long shiftDurationInHours;
 
-    @ManyToMany(mappedBy = "attendanceRecords")
-    private List<EmployeeEntity> employeeEntities;
+    @OneToMany(mappedBy = "attendanceRecordEntity")
+    private List<EmployeeAttendanceRecordEntity> employeeAttendanceRecordEntities;
 }
