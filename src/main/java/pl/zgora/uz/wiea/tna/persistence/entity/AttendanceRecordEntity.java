@@ -27,7 +27,7 @@ public class AttendanceRecordEntity {
     @JoinColumn(name = "shift_id", referencedColumnName = "id")
     private ShiftEntity shiftEntity;
 
-    @Column(name = "entered_at", nullable = true)
+    @Column(name = "entered_at", nullable = false)
     private OffsetDateTime enteredAt;
 
     @Column(name = "left_at", nullable = true)

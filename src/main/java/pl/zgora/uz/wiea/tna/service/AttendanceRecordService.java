@@ -2,6 +2,7 @@ package pl.zgora.uz.wiea.tna.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zgora.uz.wiea.tna.persistence.entity.AttendanceRecordEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.ShiftEntity;
@@ -11,7 +12,7 @@ import pl.zgora.uz.wiea.tna.persistence.repository.ShiftRepository;
 import pl.zgora.uz.wiea.tna.service.exception.ShiftNotFoundException;
 import pl.zgora.uz.wiea.tna.service.exception.UserNotFoundException;
 
-import javax.transaction.Transactional;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -40,9 +41,12 @@ public class AttendanceRecordService {
     }
 
     private long calculateElapsedTimePerShift(final AttendanceRecordEntity attendanceRecordEntity) {
-        final long started = attendanceRecordEntity.getEnteredAt().toEpochSecond();
-        final long ended = attendanceRecordEntity.getLeftAt().toEpochSecond();
-        final long differenceInMinutes = (ended - started) / 60;
-        return differenceInMinutes < 0 ? 0 : differenceInMinutes;
+        long differenceInMinutes = 0L;
+        if (Objects.nonNull(attendanceRecordEntity.getLeftAt())) {
+            final long started = attendanceRecordEntity.getEnteredAt().toEpochSecond();
+            final long ended = attendanceRecordEntity.getLeftAt().toEpochSecond();
+            differenceInMinutes = (ended - started) / 60;
+        }
+        return Math.max(differenceInMinutes, 0L);
     }
 }

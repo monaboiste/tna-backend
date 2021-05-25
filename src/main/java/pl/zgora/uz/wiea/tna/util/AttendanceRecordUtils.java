@@ -7,7 +7,7 @@ import pl.zgora.uz.wiea.tna.persistence.entity.AttendanceRecordEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.ShiftEntity;
 
-@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AttendanceRecordUtils {
 
     static public AttendanceRecord mapAttendanceRecordEntityToAttendanceRecord(
