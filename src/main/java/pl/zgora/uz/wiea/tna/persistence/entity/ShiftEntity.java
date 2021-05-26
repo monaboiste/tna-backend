@@ -3,7 +3,7 @@ package pl.zgora.uz.wiea.tna.persistence.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.OffsetDateTime;
+import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -20,11 +20,12 @@ public class ShiftEntity {
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "started_at", nullable = true)
-    private OffsetDateTime startedAt;
+    @Column(name = "date", nullable = true)
+    private Date date;
 
-    @Column(name = "ended_at", nullable = true)
-    private OffsetDateTime endedAt;
+    @Column(name = "timeOfDay", nullable = true)
+    @Enumerated(EnumType.STRING)
+    private TimeOfDay timeOfDay;
 
     @OneToMany(mappedBy = "shiftEntity")
     private List<AttendanceRecordEntity> attendanceRecordEntities;

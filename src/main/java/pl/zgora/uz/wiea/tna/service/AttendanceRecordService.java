@@ -6,12 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.zgora.uz.wiea.tna.persistence.entity.AttendanceRecordEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.ShiftEntity;
+import pl.zgora.uz.wiea.tna.persistence.entity.TimeOfDay;
 import pl.zgora.uz.wiea.tna.persistence.repository.AttendanceRecordRepository;
-import pl.zgora.uz.wiea.tna.persistence.repository.EmployeeRepository;
-import pl.zgora.uz.wiea.tna.persistence.repository.ShiftRepository;
-import pl.zgora.uz.wiea.tna.service.exception.ShiftNotFoundException;
-import pl.zgora.uz.wiea.tna.service.exception.UserNotFoundException;
 
+import java.sql.Date;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,18 +19,23 @@ import java.util.Objects;
 public class AttendanceRecordService {
 
     private final AttendanceRecordRepository attendanceRecordRepository;
-    private final EmployeeRepository employeeRepository;
-    private final ShiftRepository shiftRepository;
+    private final EmployeeService employeeService;
+    private final ShiftService shiftService;
 
     @Transactional
     public AttendanceRecordEntity createAttendanceRecord(AttendanceRecordEntity attendanceRecordEntity) {
         final long employeeId = attendanceRecordEntity.getEmployeeEntity().getId();
-        final long shiftId = attendanceRecordEntity.getShiftEntity().getId();
+        final EmployeeEntity employeeEntity = employeeService.fetchEmployeeById(employeeId);
 
-        final EmployeeEntity employeeEntity = employeeRepository.findById(employeeId)
-                .orElseThrow(UserNotFoundException::new);
-        final ShiftEntity shiftEntity = shiftRepository.findById(shiftId)
-                .orElseThrow(ShiftNotFoundException::new);
+        // Find shiftId based off enteredAt time
+        final Date date = Date.valueOf(attendanceRecordEntity.getEnteredAt().toLocalDate());
+        final TimeOfDay timeOfDay = estimateTimeOfDay(attendanceRecordEntity.getEnteredAt());
+
+        final ShiftEntity shiftEntity = shiftService.fetchShiftByDateAndTimeOfDay(date, timeOfDay)
+                .orElse(ShiftEntity.builder()
+                    .timeOfDay(timeOfDay)
+                    .date(date)
+                    .build());
 
         final long elapsedTimePerShift = calculateElapsedTimePerShift(attendanceRecordEntity);
         attendanceRecordEntity.setElapsedTimePerShiftInMinutes(elapsedTimePerShift);
@@ -72,5 +76,19 @@ public class AttendanceRecordService {
             differenceInMinutes = (ended - started) / 60;
         }
         return Math.max(differenceInMinutes, 0L);
+    }
+
+    private TimeOfDay estimateTimeOfDay(final OffsetDateTime enteredAt) {
+        final int hour = enteredAt.getHour();
+        if (hour >= 4 && hour < 10) {
+            return TimeOfDay.MORNING;
+        }
+        if (hour >= 10 && hour < 17) {
+            return TimeOfDay.AFTERNOON;
+        }
+        if ((hour >= 17 && hour < 24) || (hour < 4)) {
+            return TimeOfDay.NIGHT;
+        }
+        return null;
     }
 }

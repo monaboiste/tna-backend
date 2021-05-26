@@ -1,13 +1,10 @@
 package pl.zgora.uz.wiea.tna.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
-import pl.zgora.uz.wiea.tna.util.DateTimeDeserializer;
-import pl.zgora.uz.wiea.tna.util.DateTimeSerializer;
+import pl.zgora.uz.wiea.tna.persistence.entity.TimeOfDay;
 
-import java.time.OffsetDateTime;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -20,12 +17,8 @@ public class Shift {
     private Long id;
 
     @JsonProperty
-    @JsonSerialize(using = DateTimeSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer.class)
-    private OffsetDateTime startedAt;
+    private TimeOfDay timeOfDay;
 
     @JsonProperty
-    @JsonSerialize(using = DateTimeSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer.class)
-    private OffsetDateTime endedAt;
+    private Date date;
 }

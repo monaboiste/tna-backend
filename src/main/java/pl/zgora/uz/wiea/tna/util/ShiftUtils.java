@@ -11,16 +11,16 @@ public class ShiftUtils {
     static public Shift mapShiftEntityToShift(final ShiftEntity shiftEntity) {
         return Shift.builder()
                 .id(shiftEntity.getId())
-                .startedAt(shiftEntity.getStartedAt())
-                .endedAt(shiftEntity.getEndedAt())
+                .date(shiftEntity.getDate())
+                .timeOfDay(shiftEntity.getTimeOfDay())
                 .build();
     }
 
     static public ShiftEntity mapShiftToEntity(final Shift shift) {
         return ShiftEntity.builder()
                 .id(shift.getId())
-                .startedAt(shift.getStartedAt())
-                .endedAt(shift.getEndedAt())
+                .date(shift.getDate())
+                .timeOfDay(shift.getTimeOfDay())
                 .build();
     }
 }
