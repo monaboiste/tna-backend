@@ -13,6 +13,7 @@ public class UserUtils {
                 .id(userEntity.getId())
                 .username(userEntity.getUsername())
                 .password(userEntity.getPassword())
+                .role(userEntity.getRole())
                 .build();
     }
 
@@ -21,6 +22,7 @@ public class UserUtils {
                 .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
+                .role(user.getRole())
                 .build();
     }
 }

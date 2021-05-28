@@ -3,6 +3,7 @@ package pl.zgora.uz.wiea.tna.util;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.context.ActiveProfiles;
 import pl.zgora.uz.wiea.tna.model.User;
+import pl.zgora.uz.wiea.tna.persistence.entity.Role;
 import pl.zgora.uz.wiea.tna.persistence.entity.UserEntity;
 
 import static org.junit.jupiter.api.Assertions.assertAll;

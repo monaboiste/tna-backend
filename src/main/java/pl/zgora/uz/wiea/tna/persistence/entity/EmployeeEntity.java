@@ -3,6 +3,7 @@ package pl.zgora.uz.wiea.tna.persistence.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "employees")
@@ -13,9 +14,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class EmployeeEntity {
 
+    /**
+     * Shares PK with {@link UserEntity}
+     * See: {@link UserEntity#getId()}
+     */
     @Id
-    @Column(name = "user_id", unique = true, nullable = false)
-    private Long userId;
+    @Column(name = "id", unique = true, nullable = false)
+    private Long id;
 
     @Column(name = "firstname", nullable = false)
     private String firstName;
@@ -38,8 +43,12 @@ public class EmployeeEntity {
     @Column(name = "city", nullable = true)
     private String city;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
     @MapsId
-    @PrimaryKeyJoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
     private UserEntity userEntity;
+
+    @OneToMany(mappedBy = "employeeEntity")
+    private List<AttendanceRecordEntity> employeeAttendanceRecordEntities;
 }
