@@ -8,12 +8,14 @@ import lombok.Setter;
 import pl.zgora.uz.wiea.tna.util.DateTimeDeserializer;
 import pl.zgora.uz.wiea.tna.util.DateTimeSerializer;
 
+import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 
 @Getter
 @Setter
 public class AttendanceRecordExitTime {
 
+    @NotNull(message = "attribute.offset_date_time_format")
     @JsonProperty
     @JsonSerialize(using = DateTimeSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer.class)

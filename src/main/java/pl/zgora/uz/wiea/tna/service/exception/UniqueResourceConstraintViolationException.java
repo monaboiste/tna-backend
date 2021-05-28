@@ -1,12 +1,8 @@
 package pl.zgora.uz.wiea.tna.service.exception;
 
+import me.alidg.errors.annotation.ExceptionMapping;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ExceptionMapping(statusCode = HttpStatus.BAD_REQUEST, errorCode = "resource.already_exists")
 public class UniqueResourceConstraintViolationException extends RuntimeException {
-
-    public UniqueResourceConstraintViolationException(String message) {
-        super(message);
-    }
 }

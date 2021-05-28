@@ -1,12 +1,9 @@
 package pl.zgora.uz.wiea.tna.service.exception;
 
+import me.alidg.errors.annotation.ExceptionMapping;
+import me.alidg.errors.annotation.ExposeAsArg;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
+@ExceptionMapping(statusCode = HttpStatus.NOT_FOUND, errorCode = "resource.not_found")
 public class ResourceNotFoundException extends RuntimeException {
-
-    public ResourceNotFoundException(String message) {
-        super(message);
-    }
 }

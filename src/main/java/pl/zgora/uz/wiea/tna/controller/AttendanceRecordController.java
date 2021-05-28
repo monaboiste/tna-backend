@@ -7,6 +7,7 @@ import pl.zgora.uz.wiea.tna.persistence.entity.AttendanceRecordEntity;
 import pl.zgora.uz.wiea.tna.service.AttendanceRecordService;
 import pl.zgora.uz.wiea.tna.util.AttendanceRecordUtils;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,7 @@ public class AttendanceRecordController {
 
     @PostMapping
     public AttendanceRecord createAttendanceRecord(
-            @RequestBody final AttendanceRecord attendanceRecord) {
+            @RequestBody @Valid final AttendanceRecord attendanceRecord) {
         final AttendanceRecordEntity attendanceRecordEntity
                 = AttendanceRecordUtils.mapAttendanceRecordToEntity(attendanceRecord);
         return AttendanceRecordUtils.mapAttendanceRecordEntityToAttendanceRecord(
