@@ -24,7 +24,7 @@ public class ShiftController {
     }
 
     @GetMapping
-    List<Shift>  fetchAllShifts() {
+    public List<Shift>  fetchAllShifts() {
         final List<ShiftEntity> shiftEntities = shiftService.fetchAllShifts();
         final List<Shift> shifts = shiftEntities.parallelStream()
                 .map(ShiftUtils::mapShiftEntityToShift)

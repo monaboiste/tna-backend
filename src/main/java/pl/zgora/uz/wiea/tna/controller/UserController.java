@@ -19,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    List<User> fetchAllUsers() {
+    public List<User> fetchAllUsers() {
         final List<UserEntity> userEntities = userService.fetchAllUsers();
         final List<User> users = userEntities.parallelStream()
                 .map(UserUtils::mapUserEntityToUser)
@@ -28,21 +28,21 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    User fetchUserById(@PathVariable("id") long id) {
+    public User fetchUserById(@PathVariable("id") long id) {
         final UserEntity userEntity = userService.fetchUserById(id);
         return UserUtils.mapUserEntityToUser(userEntity);
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    User createUser(@RequestBody final User user){
+    public User createUser(@RequestBody final User user){
         final UserEntity userEntity = userService.createUser(UserUtils.mapUserToUserEntity(user));
         return UserUtils.mapUserEntityToUser(userEntity);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    void deleteUser(@PathVariable("id") long id) {
+    public void deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);
     }
 }

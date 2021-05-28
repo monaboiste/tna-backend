@@ -47,6 +47,10 @@ public class EmployeeService {
         return employeeRepository.saveAndFlush(employeeEntity);
     }
 
+    public boolean employeeExistsById(long employeeId) {
+        return employeeRepository.existsById(employeeId);
+    }
+
     private String generateDefaultUsername(final EmployeeEntity employeeEntity) {
         final char firstLetterOfName = employeeEntity.getFirstName().toLowerCase().charAt(0);
         final String lastname = employeeEntity.getLastName().split(" ")[0].toLowerCase();

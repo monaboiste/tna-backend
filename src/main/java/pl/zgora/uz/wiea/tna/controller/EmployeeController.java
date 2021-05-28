@@ -3,6 +3,8 @@ package pl.zgora.uz.wiea.tna.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import pl.zgora.uz.wiea.tna.model.AttendanceRecord;
+import pl.zgora.uz.wiea.tna.model.AttendanceRecordEntryTime;
+import pl.zgora.uz.wiea.tna.model.AttendanceRecordExitTime;
 import pl.zgora.uz.wiea.tna.model.Employee;
 import pl.zgora.uz.wiea.tna.persistence.entity.AttendanceRecordEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
@@ -22,8 +24,15 @@ public class EmployeeController {
     private final EmployeeService employeeService;
     private final AttendanceRecordService attendanceRecordService;
 
+    @PostMapping
+    public Employee createEmployee(@RequestBody final Employee employee) {
+        final EmployeeEntity employeeEntity = employeeService.createEmployee(
+                EmployeeUtils.mapEmployeeToEntity(employee));
+        return EmployeeUtils.mapEmployeeEntityToEmployee(employeeEntity);
+    }
+
     @GetMapping
-    List<Employee> fetchAllEmployees() {
+    public List<Employee> fetchAllEmployees() {
         final List<EmployeeEntity> employeeEntities = employeeService.fetchAllEmployees();
         final List<Employee> employees = employeeEntities.parallelStream()
                 .map(EmployeeUtils::mapEmployeeEntityToEmployee)
@@ -32,13 +41,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    Employee fetchEmployeeById(@PathVariable long employeeId) {
+    public Employee fetchEmployeeById(@PathVariable long employeeId) {
         final EmployeeEntity employeeEntity = employeeService.fetchEmployeeById(employeeId);
         return EmployeeUtils.mapEmployeeEntityToEmployee(employeeEntity);
     }
 
     @GetMapping("/{employeeId}/attendance")
-    List<AttendanceRecord> fetchAllEmployeesAttendanceRecords(@PathVariable long employeeId) {
+    public List<AttendanceRecord> fetchAllEmployeesAttendanceRecords(@PathVariable long employeeId) {
         final List<AttendanceRecordEntity> attendanceRecordEntities
                 = attendanceRecordService.fetchAllAttendanceRecordsByEmployeeId(employeeId);
         final List<AttendanceRecord> attendanceRecords = attendanceRecordEntities.parallelStream()
@@ -48,10 +57,19 @@ public class EmployeeController {
         return attendanceRecords;
     }
 
-    @PostMapping
-    Employee createEmployee(@RequestBody final Employee employee) {
-        final EmployeeEntity employeeEntity = employeeService.createEmployee(
-                EmployeeUtils.mapEmployeeToEntity(employee));
-        return EmployeeUtils.mapEmployeeEntityToEmployee(employeeEntity);
+    @PatchMapping("/{employeeId}/attendance/{attendanceId}/entry-time")
+    public AttendanceRecord updateEntryTime(@PathVariable long employeeId,
+                                            @PathVariable("attendanceId") long attendanceId,
+                                            @RequestBody final AttendanceRecordEntryTime attendanceRecordEntryTime) {
+        return AttendanceRecordUtils.mapAttendanceRecordEntityToAttendanceRecord(
+                attendanceRecordService.updateEntryTime(employeeId, attendanceId, attendanceRecordEntryTime.getEnteredAt()));
+    }
+
+    @PatchMapping("/{employeeId}/attendance/{attendanceId}/exit-time")
+    public AttendanceRecord updateExitTime(@PathVariable long employeeId,
+                                           @PathVariable("attendanceId") long attendanceId,
+                                           @RequestBody final AttendanceRecordExitTime attendanceRecordExitTime) {
+        return AttendanceRecordUtils.mapAttendanceRecordEntityToAttendanceRecord(
+                attendanceRecordService.updateExitTime(employeeId, attendanceId, attendanceRecordExitTime.getLeftAt()));
     }
 }

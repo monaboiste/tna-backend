@@ -8,6 +8,8 @@ import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.ShiftEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.TimeOfDay;
 import pl.zgora.uz.wiea.tna.persistence.repository.AttendanceRecordRepository;
+import pl.zgora.uz.wiea.tna.service.exception.AttendanceNotFoundException;
+import pl.zgora.uz.wiea.tna.service.exception.EmployeeNotFoundException;
 
 import java.sql.Date;
 import java.time.OffsetDateTime;
@@ -66,6 +68,48 @@ public class AttendanceRecordService {
                     e.setElapsedTimePerShiftInMinutes(elapsedTimePerShift);
                 });
         return attendanceRecordEntities;
+    }
+
+    @Transactional
+    public AttendanceRecordEntity updateEntryTime(long employeeId,
+                                                  long attendanceId,
+                                                  final OffsetDateTime enteredAt) {
+        if (!employeeService.employeeExistsById(employeeId)) {
+            throw new EmployeeNotFoundException();
+        }
+
+        AttendanceRecordEntity attendanceRecordEntity
+                = attendanceRecordRepository.findById(attendanceId)
+                    .orElseThrow(AttendanceNotFoundException::new);
+
+        ShiftEntity shiftEntity = attendanceRecordEntity.getShiftEntity();
+        final TimeOfDay timeOfDay = estimateTimeOfDay(enteredAt);
+        shiftEntity.setTimeOfDay(timeOfDay);
+
+        attendanceRecordEntity.setEnteredAt(enteredAt);
+        long elapsedTimePerShift = calculateElapsedTimePerShift(attendanceRecordEntity);
+        attendanceRecordEntity.setElapsedTimePerShiftInMinutes(elapsedTimePerShift);
+
+        return attendanceRecordRepository.saveAndFlush(attendanceRecordEntity);
+    }
+
+    @Transactional
+    public AttendanceRecordEntity updateExitTime(long employeeId,
+                                                 long attendanceId,
+                                                 final OffsetDateTime leftAt) {
+        if (!employeeService.employeeExistsById(employeeId)) {
+            throw new EmployeeNotFoundException();
+        }
+
+        AttendanceRecordEntity attendanceRecordEntity
+                = attendanceRecordRepository.findById(attendanceId)
+                    .orElseThrow(AttendanceNotFoundException::new);
+
+        attendanceRecordEntity.setLeftAt(leftAt);
+        long elapsedTimePerShift = calculateElapsedTimePerShift(attendanceRecordEntity);
+        attendanceRecordEntity.setElapsedTimePerShiftInMinutes(elapsedTimePerShift);
+
+        return attendanceRecordRepository.saveAndFlush(attendanceRecordEntity);
     }
 
     private long calculateElapsedTimePerShift(final AttendanceRecordEntity attendanceRecordEntity) {
