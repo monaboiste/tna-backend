@@ -19,6 +19,6 @@ server:
     port: 8080
     servlet:
         context-path: /api
-    error:
-        include-exception: true
-        include-message: always
+
+errors:
+    expose-arguments: ALWAYS

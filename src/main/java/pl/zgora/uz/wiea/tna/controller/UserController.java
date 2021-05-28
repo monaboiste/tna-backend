@@ -8,6 +8,7 @@ import pl.zgora.uz.wiea.tna.persistence.entity.UserEntity;
 import pl.zgora.uz.wiea.tna.service.UserService;
 import pl.zgora.uz.wiea.tna.util.UserUtils;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,15 +34,15 @@ public class UserController {
         return UserUtils.mapUserEntityToUser(userEntity);
     }
 
-    @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public User createUser(@RequestBody final User user){
+    @PostMapping
+    public User createUser(@RequestBody @Valid final User user){
         final UserEntity userEntity = userService.createUser(UserUtils.mapUserToUserEntity(user));
         return UserUtils.mapUserEntityToUser(userEntity);
     }
 
-    @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") long id) {
         userService.deleteUser(id);
     }

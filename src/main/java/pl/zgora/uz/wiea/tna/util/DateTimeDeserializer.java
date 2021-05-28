@@ -18,7 +18,7 @@ public class DateTimeDeserializer extends JsonDeserializer<OffsetDateTime> {
                               throws IOException, JsonProcessingException {
 
         final DateTimeFormatter dateTimeFormatter = DateTimeFormatter
-                .ofPattern("yyyy/MM/dd HH:mm:ss")
+                .ofPattern("yyyy-MM-dd HH:mm:ss")
                 .withZone(ZoneOffset.UTC);
         return OffsetDateTime.parse(parser.getText(), dateTimeFormatter);
     }
