@@ -9,8 +9,11 @@ import pl.zgora.uz.wiea.tna.service.UserService;
 import pl.zgora.uz.wiea.tna.util.UserUtils;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static pl.zgora.uz.wiea.tna.util.UserUtils.mapUserEntityToUser;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,6 +21,14 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping("/current")
+    public User fetchCurrentUser(final Principal principal) {
+        final User user = mapUserEntityToUser(
+                userService.fetchCurrentUserByUsername(principal.getName()));
+        return user;
+    }
+
 
     @GetMapping
     public List<User> fetchAllUsers() {
@@ -31,14 +42,14 @@ public class UserController {
     @GetMapping("/{id}")
     public User fetchUserById(@PathVariable("id") long id) {
         final UserEntity userEntity = userService.fetchUserById(id);
-        return UserUtils.mapUserEntityToUser(userEntity);
+        return mapUserEntityToUser(userEntity);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public User createUser(@RequestBody @Valid final User user){
         final UserEntity userEntity = userService.createUser(UserUtils.mapUserToUserEntity(user));
-        return UserUtils.mapUserEntityToUser(userEntity);
+        return mapUserEntityToUser(userEntity);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

@@ -47,4 +47,9 @@ public class UserService {
 
         userRepository.delete(userEntity);
     }
+
+    public UserEntity fetchCurrentUserByUsername(final String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(UserNotFoundException::new);
+    }
 }
