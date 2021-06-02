@@ -44,7 +44,7 @@ public class EmployeeEntity {
     private String city;
 
     @MapsId
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
     private UserEntity userEntity;

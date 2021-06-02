@@ -1,6 +1,7 @@
 package pl.zgora.uz.wiea.tna.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.zgora.uz.wiea.tna.model.AttendanceRecord;
@@ -86,5 +87,12 @@ public class EmployeeController {
                         attendanceId,
                         attendanceRecordExitTime.getLeftAt()
                 ));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{employeeId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteEmployee(@PathVariable("employeeId") long employeeId) {
+        employeeService.deleteEmployee(employeeId);
     }
 }

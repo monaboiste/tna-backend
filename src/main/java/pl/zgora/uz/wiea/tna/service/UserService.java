@@ -42,10 +42,10 @@ public class UserService {
 
     @Transactional
     public void deleteUser(long id) {
-        final UserEntity userEntity = userRepository.findById(id)
-                .orElseThrow(UserNotFoundException::new);
-
-        userRepository.delete(userEntity);
+        if (!userRepository.existsById(id)) {
+                throw new UserNotFoundException();
+        }
+        userRepository.deleteById(id);
     }
 
     public UserEntity fetchCurrentUserByUsername(final String username) {
