@@ -78,4 +78,12 @@ public class EmployeeService {
             throw new ContractIdViolationException();
         }
     }
+
+    @Transactional
+    public void deleteEmployee(long employeeId) {
+        if (!employeeRepository.existsById(employeeId)) {
+            throw new UserNotFoundException();
+        }
+        employeeRepository.deleteById(employeeId);
+    }
 }
