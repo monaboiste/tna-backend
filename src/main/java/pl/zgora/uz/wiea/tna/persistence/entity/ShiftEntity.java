@@ -27,6 +27,6 @@ public class ShiftEntity {
     @Enumerated(EnumType.STRING)
     private TimeOfDay timeOfDay;
 
-    @OneToMany(mappedBy = "shiftEntity")
+    @OneToMany(mappedBy = "shiftEntity", cascade = CascadeType.PERSIST)
     private List<AttendanceRecordEntity> attendanceRecordEntities;
 }

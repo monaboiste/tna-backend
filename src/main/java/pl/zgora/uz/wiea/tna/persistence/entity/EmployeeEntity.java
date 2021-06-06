@@ -1,6 +1,8 @@
 package pl.zgora.uz.wiea.tna.persistence.entity;
 
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -44,11 +46,23 @@ public class EmployeeEntity {
     private String city;
 
     @MapsId
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, orphanRemoval = true)
+    @OneToOne(
+            cascade = CascadeType.REMOVE,
+            fetch = FetchType.EAGER,
+            optional = false,
+            orphanRemoval = true)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @PrimaryKeyJoinColumn(name = "id", referencedColumnName = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserEntity userEntity;
 
     @OneToMany(mappedBy = "employeeEntity")
     private List<AttendanceRecordEntity> employeeAttendanceRecordEntities;
+
+    @PreRemove
+    private void preRemove() {
+        for (AttendanceRecordEntity record : employeeAttendanceRecordEntities) {
+            record.setEmployeeEntity(null);
+        }
+    }
 }

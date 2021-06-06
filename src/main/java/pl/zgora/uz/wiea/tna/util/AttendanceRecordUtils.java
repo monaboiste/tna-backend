@@ -12,9 +12,11 @@ public class AttendanceRecordUtils {
 
     static public AttendanceRecord mapAttendanceRecordEntityToAttendanceRecord(
             final AttendanceRecordEntity attendanceRecordEntity) {
+        final EmployeeEntity employeeEntity = attendanceRecordEntity.getEmployeeEntity();
+
         return AttendanceRecord.builder()
                 .id(attendanceRecordEntity.getId())
-                .employeeId(attendanceRecordEntity.getEmployeeEntity().getId())
+                .employeeId(employeeEntity != null ? employeeEntity.getId() : null)
                 .shiftId(attendanceRecordEntity.getShiftEntity().getId())
                 .enteredAt(attendanceRecordEntity.getEnteredAt())
                 .leftAt(attendanceRecordEntity.getLeftAt())

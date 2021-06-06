@@ -23,7 +23,7 @@ public class AttendanceRecordEntity {
     @JoinColumn(name = "employee_id", referencedColumnName = "user_id")
     private EmployeeEntity employeeEntity;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST, optional = false)
     @JoinColumn(name = "shift_id", referencedColumnName = "id")
     private ShiftEntity shiftEntity;
 
