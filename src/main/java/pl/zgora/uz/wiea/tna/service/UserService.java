@@ -30,6 +30,7 @@ public class UserService {
 
     @Transactional
     public UserEntity createUser(final UserEntity userEntity) {
+        userEntity.setUsername(userEntity.getUsername().toLowerCase());
         if (userRepository.existsByUsername(userEntity.getUsername())) {
             throw new UserConstraintViolationException();
         }
@@ -49,7 +50,7 @@ public class UserService {
     }
 
     public UserEntity fetchCurrentUserByUsername(final String username) {
-        return userRepository.findByUsername(username)
+        return userRepository.findByUsername(username.toLowerCase())
                 .orElseThrow(UserNotFoundException::new);
     }
 }
