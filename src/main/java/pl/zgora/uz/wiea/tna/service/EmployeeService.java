@@ -32,7 +32,7 @@ public class EmployeeService {
     @Transactional
     public EmployeeEntity createEmployee(EmployeeEntity employeeEntity) {
         validateContractId(employeeEntity.getContractId());
-        reformatFields(employeeEntity);
+        prettifyFields(employeeEntity);
 
         final String username = generateDefaultUsername(employeeEntity);
         final String password = generateDefaultPassword();
@@ -51,6 +51,14 @@ public class EmployeeService {
         return employeeRepository.existsById(employeeId);
     }
 
+    @Transactional
+    public void deleteEmployee(long employeeId) {
+        if (!employeeRepository.existsById(employeeId)) {
+            throw new UserNotFoundException();
+        }
+        employeeRepository.deleteById(employeeId);
+    }
+
     private String generateDefaultUsername(final EmployeeEntity employeeEntity) {
         final char firstLetterOfName = employeeEntity.getFirstName().toLowerCase().charAt(0);
         final String lastname = employeeEntity.getLastName().split(" ")[0].toLowerCase();
@@ -65,25 +73,20 @@ public class EmployeeService {
         return "test";
     }
 
-    private void reformatFields(final EmployeeEntity employeeEntity) {
+    private void prettifyFields(final EmployeeEntity employeeEntity) {
         employeeEntity.setFirstName(StringUtils.toTitleCase(employeeEntity.getFirstName()));
         employeeEntity.setLastName(StringUtils.toTitleCase(employeeEntity.getLastName()));
+        employeeEntity.setDepartment(StringUtils.toTitleCase(employeeEntity.getDepartment()));
+        employeeEntity.setStreet(StringUtils.toTitleCase(employeeEntity.getStreet()));
+        employeeEntity.setCity(StringUtils.toTitleCase(employeeEntity.getCity()));
         employeeEntity.setContractId(employeeEntity.getContractId().toUpperCase());
     }
 
     private void validateContractId(final String contractId) {
         if (Objects.isNull(contractId)
                 || contractId.length() < 3
-                || employeeRepository.existsByContractId(contractId)) {
+                || employeeRepository.existsByContractId(contractId.toUpperCase())) {
             throw new ContractIdViolationException();
         }
-    }
-
-    @Transactional
-    public void deleteEmployee(long employeeId) {
-        if (!employeeRepository.existsById(employeeId)) {
-            throw new UserNotFoundException();
-        }
-        employeeRepository.deleteById(employeeId);
     }
 }
