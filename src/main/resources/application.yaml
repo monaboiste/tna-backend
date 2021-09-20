@@ -1,24 +1,28 @@
 ### Application
 app:
-    ADMIN_PASSWORD: ${TNA_ADMIN_PASSWORD}
+  TNA_ADMIN_LOGIN: ${TNA_ADMIN_LOGIN}
+  TNA_ADMIN_PASSWORD: ${TNA_ADMIN_PASSWORD}
 
-spring:
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/tna?serverTimezone=UTC
-        username: ${MYSQL_USER}
-        password: ${MYSQL_PASSWORD}
-    jpa:
-        hibernate.ddl-auto: update
-        properties:
-            hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        show-sql: true
-        open-in-view: false
-
+#### Server
 server:
-    port: 8080
-    servlet:
-        context-path: /api
+  port: 8080
+  servlet:
+    context-path: /api
 
 errors:
-    expose-arguments: ALWAYS
+  expose-arguments: ALWAYS
+
+### Spring Data
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    initialization-mode: always
+  jpa:
+    hibernate.ddl-auto: update
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    open-in-view: false

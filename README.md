@@ -1,13 +1,8 @@
 # TNA System (Time and Attendance)
-TNA System is efficient working time management Web Application. The solution can function as a stand-alone system, which features:
-- keeping records of employees' working,
+TNA System is a working time management Web Application. The solution can 
+function as a stand-alone system, which features:
+- keeping records of employees' working hours,
 - calculating working time on a monthly basis.  
-
-Records cover:
-- the number of working hours and the start and end hours of work,
-- the number of hours worked at night,
-- the number of overtimes,
-- days off.
 
 ___
 ### Project's functional requirements
@@ -40,50 +35,46 @@ ___
 ### Prerequisites
 These of following must be installed on your local machine:  
  * JDK 11  
- * MySQL 8  
+ * Docker and Docker-Compose  
  * Git  
 
-### Set up database
-Connect to MySQL and create new database:
-```sh
-mysql -u yourusername -p
-create database tna;
-```
-
-### Set up environment variables
-Windows (requires administrator):
-```sh
-setx MYSQL_USER "yourusername" /M
-setx MYSQL_USER "yourpassword" /M
-setx TNA_ADMIN_PASSWORD "admin" /M
-```
-or, on Linux:
-```sh
-echo "export MYSQL_USER=yourusername" >> ~/.profile
-echo "export MYSQL_PASSWORD=yourpassword" >> ~/.profile
-echo "export TNA_ADMIN_PASSWORD=admin" >> ~/.profile
-```
-### First run
-Clone repository:  
+### Clone
+Clone repository:
 ```sh
 git clone https://github.com/monaboiste/tna-system-backend.git
 ```  
-Run MySQL Server:
+
+### Set up environment variables
+The variables listed in  the example below must be specified. 
+The easiest way is set up ``.env`` file (supported by bootRun task): 
 ```sh
-mysqld
+# Application
+TNA_ADMIN_LOGIN=admin
+TNA_ADMIN_PASSWORD=admin
+
+# Database
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=tna
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
 ```
-or, on Linux:
+If you prefer to build and run the application using IntelliJ IDE, 
+you might consider installing [EnvFile plugin](https://plugins.jetbrains.com/plugin/7861-envfile).
+
+### Run
+Start PostgreSQL:
 ```sh
-sudo /etc/init.d/mysql start
+docker-compose up -d
 ```
 
-Then cd into ``url-shortener`` directory and execute:  
+Execute:  
 ```sh
-./gradlew :bootRun
+./gradlew bootRun
 ```
-System provides default in-memory ``admin`` user with password ``admin``.
+System provides default in-memory ``$TNA_ADMIN_LOGIN`` user with password ``$TNA_ADMIN_PASSWORD``.
 
-Gradle should build project and start Tomcat Server on your localhost. Base URL of Web Api: [http://localhost:8080/api](http://localhost:8080/api).
+Gradle will build project and start Tomcat Server on your localhost. Base URL of Web Api: [http://localhost:8080/api](http://localhost:8080/api).
   
 #### Tests
 Run unit tests:
