@@ -75,7 +75,19 @@ Execute:
 System provides default in-memory ``$TNA_ADMIN_LOGIN`` user with password ``$TNA_ADMIN_PASSWORD``.
 
 Gradle will build project and start Tomcat Server on your localhost. Base URL of Web Api: [http://localhost:8080/api](http://localhost:8080/api).
-  
+
+Generate sample data:  
+To auto-generate sample data, run Spring Boot application as follows:
+```sh
+./gradlew bootRun -Dspring.jpa.hibernate.ddl-auto=update
+```
+
+You can also use bash scripts provided in ``scripts/`` directory:
+```sh
+./generate-employees.sh -u <username>:<password> -h <host_addr> # Generate some employee data
+./generate-attendance-records.sh -u <username>:<password> -h <host_addr> # Generate attendance data
+```
+
 #### Tests
 Run unit tests:
 ```sh
