@@ -22,7 +22,10 @@ import pl.zgora.uz.wiea.tna.security.CustomUserDetailsService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${app.ADMIN_PASSWORD}")
+    @Value("${app.TNA_ADMIN_LOGIN}")
+    private String adminLogin;
+
+    @Value("${app.TNA_ADMIN_PASSWORD}")
     private String adminPassword;
 
     private final CustomUserDetailsService userDetailsService;
@@ -37,7 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Provide default in-memory admin user
         auth.inMemoryAuthentication()
-                .withUser("admin")
+                .withUser(adminLogin)
                 .password(passwordEncoder().encode(adminPassword))
                 .credentialsExpired(false)
                 .accountExpired(false)
