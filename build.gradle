@@ -75,13 +75,13 @@ bootRun {
     systemProperties = System.properties as Map<String, ?>
     // combined with co.uzzu.dotenv.gradle plugin allows to use .env file
     environment = [
-            'TNA_ADMIN_LOGIN': env.TNA_ADMIN_LOGIN.value,
-            'TNA_ADMIN_PASSWORD': env.TNA_ADMIN_PASSWORD.value,
-            'POSTGRES_HOST': env.POSTGRES_HOST.value,
-            'POSTGRES_PORT': env.POSTGRES_PORT.value,
-            'POSTGRES_DB': env.POSTGRES_DB.value,
-            'POSTGRES_USER': env.POSTGRES_USER.value,
-            'POSTGRES_PASSWORD': env.POSTGRES_PASSWORD.value
+            'TNA_ADMIN_LOGIN': env.TNA_ADMIN_LOGIN.orNull(),
+            'TNA_ADMIN_PASSWORD': env.TNA_ADMIN_PASSWORD.orNull(),
+            'POSTGRES_HOST': env.POSTGRES_HOST.orNull(),
+            'POSTGRES_PORT': env.POSTGRES_PORT.orNull(),
+            'POSTGRES_DB': env.POSTGRES_DB.orNull(),
+            'POSTGRES_USER': env.POSTGRES_USER.orNull(),
+            'POSTGRES_PASSWORD': env.POSTGRES_PASSWORD.orNull()
     ]
 }
 
