@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'co.uzzu.dotenv.gradle' version '1.1.0'
+    id 'idea'
     id 'java'
 }
 
@@ -9,23 +10,68 @@ group = 'pl.zgora.uz.wiea'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-    integrationTestImplementation.extendsFrom implementation
-    integrationTestRuntimeOnly.extendsFrom runtimeOnly
-}
-
 repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform()
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
 sourceSets {
     integrationTest {
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
+        java {
+            compileClasspath += sourceSets.main.output
+            runtimeClasspath += sourceSets.main.output
+        }
+        resources.srcDir file('src/integrationTest/resources')
     }
+}
+
+idea {
+    module {
+        testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
+        testSourceDirs += project.sourceSets.integrationTest.resources.srcDirs
+    }
+}
+
+tasks.processIntegrationTestResources.doFirst {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+task integrationTest(type: Test) {
+    group = 'verification'
+    description = 'Runs the integration tests.'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    include("**/*IntegrationTest.java")
+    outputs.upToDateWhen { false }
+    mustRunAfter test
+}
+
+check.dependsOn integrationTest
+
+bootRun {
+    systemProperties = System.properties as Map<String, ?>
+    // combined with co.uzzu.dotenv.gradle plugin allows to use .env file
+    environment = [
+            'TNA_ADMIN_LOGIN': env.TNA_ADMIN_LOGIN.value,
+            'TNA_ADMIN_PASSWORD': env.TNA_ADMIN_PASSWORD.value,
+            'POSTGRES_HOST': env.POSTGRES_HOST.value,
+            'POSTGRES_PORT': env.POSTGRES_PORT.value,
+            'POSTGRES_DB': env.POSTGRES_DB.value,
+            'POSTGRES_USER': env.POSTGRES_USER.value,
+            'POSTGRES_PASSWORD': env.POSTGRES_PASSWORD.value
+    ]
 }
 
 dependencies {
@@ -55,35 +101,4 @@ dependencies {
 
     // database prod
     runtimeOnly 'org.postgresql:postgresql'
-}
-
-test {
-    useJUnitPlatform()
-}
-
-task integrationTest(type: Test) {
-    description = 'Integration tests'
-    group = 'verification'
-
-    testClassesDirs = sourceSets.integrationTest.output.classesDirs
-    classpath = sourceSets.integrationTest.runtimeClasspath
-    include("**/*IntegrationTest.java")
-    outputs.upToDateWhen { false }
-    mustRunAfter test
-}
-
-check.dependsOn integrationTest
-
-bootRun {
-    systemProperties = System.properties as Map<String, ?>
-    // combined with co.uzzu.dotenv.gradle plugin allows to use .env file
-    environment = [
-            'TNA_ADMIN_LOGIN': env.TNA_ADMIN_LOGIN.value,
-            'TNA_ADMIN_PASSWORD': env.TNA_ADMIN_PASSWORD.value,
-            'POSTGRES_HOST': env.POSTGRES_HOST.value,
-            'POSTGRES_PORT': env.POSTGRES_PORT.value,
-            'POSTGRES_DB': env.POSTGRES_DB.value,
-            'POSTGRES_USER': env.POSTGRES_USER.value,
-            'POSTGRES_PASSWORD': env.POSTGRES_PASSWORD.value
-    ]
 }

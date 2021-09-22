@@ -22,10 +22,10 @@ import pl.zgora.uz.wiea.tna.security.CustomUserDetailsService;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${app.TNA_ADMIN_LOGIN}")
+    @Value("${app.tna-admin-login}")
     private String adminLogin;
 
-    @Value("${app.TNA_ADMIN_PASSWORD}")
+    @Value("${app.tna-admin-password}")
     private String adminPassword;
 
     private final CustomUserDetailsService userDetailsService;

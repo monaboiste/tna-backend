@@ -1,10 +1,15 @@
 ### Integration Test
+app:
+  tna-admin-login: admin
+  tna-admin-password: admin
+
 spring:
   datasource:
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:integration_testdb;DB_CLOSE_DELAY=-1
     username: sa
     password: sa
+    data: 'classpath:samples-integration.sql'
   jpa:
     hibernate.ddl-auto: create-drop
     properties:

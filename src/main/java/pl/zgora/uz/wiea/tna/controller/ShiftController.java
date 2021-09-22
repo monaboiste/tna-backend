@@ -2,7 +2,11 @@ package pl.zgora.uz.wiea.tna.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import pl.zgora.uz.wiea.tna.model.Shift;
 import pl.zgora.uz.wiea.tna.persistence.entity.ShiftEntity;
 import pl.zgora.uz.wiea.tna.service.ShiftService;
@@ -29,9 +33,8 @@ public class ShiftController {
     @GetMapping
     public List<Shift>  fetchAllShifts() {
         final List<ShiftEntity> shiftEntities = shiftService.fetchAllShifts();
-        final List<Shift> shifts = shiftEntities.parallelStream()
+        return shiftEntities.parallelStream()
                 .map(ShiftUtils::mapShiftEntityToShift)
                 .collect(Collectors.toList());
-        return shifts;
     }
 }

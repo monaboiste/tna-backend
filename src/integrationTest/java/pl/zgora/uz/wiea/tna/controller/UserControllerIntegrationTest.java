@@ -9,10 +9,8 @@ import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -21,11 +19,9 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import pl.zgora.uz.wiea.tna.model.User;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -34,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @WithMockUser
-public class UserControllerIntegrationTest {
+class UserControllerIntegrationTest {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -43,19 +39,9 @@ public class UserControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @BeforeAll
-    void setUp(@Autowired final DataSource dataSource,
-               @Autowired final WebApplicationContext webApplicationContext) {
+    void setUp(@Autowired final WebApplicationContext webApplicationContext) {
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-
         objectMapper.disable(MapperFeature.USE_ANNOTATIONS);
-
-        try (Connection conn = dataSource.getConnection()) {
-            // you'll have to make sure conn.autoCommit = true (default for e.g. H2)
-            // e.g. url=jdbc:h2:mem:integration_testdb;DB_CLOSE_DELAY=-1;MODE=MySQL
-            ScriptUtils.executeSqlScript(conn, new ClassPathResource("samples-integration.sql"));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
 
     @Test
@@ -71,9 +57,9 @@ public class UserControllerIntegrationTest {
         assertAll(
                 () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
                 () -> assertTrue(users.length > 0),
-                () -> assertEquals(users[0].getId(), 1L),
-                () -> assertEquals(users[0].getUsername(), "test1"),
-                () -> assertEquals(users[0].getPassword(), "test1")
+                () -> assertEquals(1L, users[0].getId()),
+                () -> assertEquals("test1", users[0].getUsername()),
+                () -> assertEquals("test1", users[0].getPassword())
         );
     }
 
@@ -90,13 +76,13 @@ public class UserControllerIntegrationTest {
 
         assertAll(
                 () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
-                () -> assertEquals(user.getId(), 1L),
-                () -> assertEquals(user.getUsername(), "test1"),
-                () -> assertEquals(user.getPassword(), "test1")
+                () -> assertEquals(1L, user.getId()),
+                () -> assertEquals("test1", user.getUsername()),
+                () -> assertEquals("test1", user.getPassword())
         );
     }
 
-    private <T> T convertToPojo(final String jsonString, Class clazz) throws JsonProcessingException {
-        return (T) objectMapper.readValue(jsonString, clazz);
+    private <T> T convertToPojo(final String jsonString, Class<T> clazz) throws JsonProcessingException {
+        return objectMapper.readValue(jsonString, clazz);
     }
 }

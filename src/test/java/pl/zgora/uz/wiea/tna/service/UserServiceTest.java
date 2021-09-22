@@ -32,7 +32,7 @@ class UserServiceTest {
 
     @Test
     void shouldFetchAllUsers() {
-        final List<UserEntity> expected = Arrays.asList(
+        final List<UserEntity> expected = List.of(
                 UserEntity.builder()
                         .id(1L)
                         .username("sample")
