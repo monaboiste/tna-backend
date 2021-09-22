@@ -30,11 +30,11 @@ jsonData=(
     "city": "Kraków"
   }'
   '{
-    "firstName": "Mateo",
-    "lastName": "Gała",
+    "firstName": "Mateusz",
+    "lastName": "Opole",
     "contractId": "CV12345699",
     "department": "Logistics",
-    "street": "Pogromcy Smoków i Dziewic 13/a",
+    "street": "Warszawska 13/a",
     "postCode": "86-300",
     "city": "Kraków"
   }'
@@ -49,7 +49,7 @@ jsonData=(
   }'
   '{
     "firstName": "Wojtek",
-    "lastName": "Dsw",
+    "lastName": "Dąb",
     "contractId": "CV22345699",
     "department": "IT",
     "street": "Święty Wojciech 77",
@@ -66,11 +66,11 @@ jsonData=(
     "city": "Głogów"
   }'
   '{
-    "firstName": "Valdena",
-    "lastName": "Yalanska",
+    "firstName": "Adrianna",
+    "lastName": "Kulczyk",
     "contractId": "CV22345654",
     "department": "Product Verification",
-    "street": "Szona Kisielińska 18/300",
+    "street": "Szosa Kisielińska 18/300",
     "postCode": "12-304",
     "city": "Świebodzin"
   }'
@@ -79,7 +79,7 @@ jsonData=(
     "lastName": "Yanushkiewic",
     "contractId": "CV22345254",
     "department": "Product Verification",
-    "street": "Szona Kisielińska 18/301",
+    "street": "Szosa Kisielińska 18/301",
     "postCode": "12-304",
     "city": "Świebodzin"
   }'
@@ -88,16 +88,16 @@ jsonData=(
     "lastName": "Baranowsky",
     "contractId": "CV22312345",
     "department": "Product Verification",
-    "street": "Szona Kisielińska 18/302",
+    "street": "Szosa Kisielińska 18/302",
     "postCode": "12-304",
     "city": "Świebodzin"
   }'
   '{
-    "firstName": "Oleksander",
-    "lastName": "Omelchenko",
+    "firstName": "Katarzyna",
+    "lastName": "Kotwa",
     "contractId": "CV22312344",
     "department": "Product Verification",
-    "street": "Szona Kisielińska 18/303",
+    "street": "Szosa Kisielińska 18/303",
     "postCode": "12-304",
     "city": "Świebodzin"
   }'
@@ -106,27 +106,27 @@ jsonData=(
     "lastName": "Kowalska",
     "contractId": "CV98765432",
     "department": "Product Verification",
-    "street": "Zbrodniarza Radzieckiego 44a/12",
+    "street": "Zbrodniarza 44a/12",
     "postCode": "76-660",
     "city": "Zielona Góra"
   }'
   '{
-    "firstName": "Błonisław",
+    "firstName": "Bronisław",
     "lastName": "Kowalski",
     "contractId": "CV98765433",
     "department": "Product Verification",
-    "street": "Zbłodniarza Ładzieckiego 44a/12",
+    "street": "Zbrodniarza 44a/12",
     "postCode": "76-660",
     "city": "Zielona Góra"
   }'
   '{
-    "firstName": "Monka",
-    "lastName": "Sumna",
-    "contractId": "CV98765669",
+    "firstName": "Test",
+    "lastName": "Test",
+    "contractId": "CV00000001",
     "department": "IT",
-    "street": "Skargi 12",
-    "postCode": "76-661",
-    "city": "Zielona Góra"
+    "street": "Test",
+    "postCode": "00-000",
+    "city": "Test"
   }'
 )
 
