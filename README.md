@@ -17,7 +17,7 @@ ___
 ##### Employee time tracking system related
 | Req ID| Req Description | Priority |
 |:-----:|:---------------:|:--------:|
-| FR201 | The system shall register Employee's clock-ins and clock-outs (ex. using NFC proximity badages at terminals) and store in database | High |
+| FR201 | The system shall register Employee's clock-ins and clock-outs (e.g. using NFC proximity badages at terminals) and store in database | High |
 | FR202 | The system shall record the working hours of employees on a daily/mothly basis for each Employee | High |
 | FR203 | Manager shall be able manually change Employees' working hours | High |
 
