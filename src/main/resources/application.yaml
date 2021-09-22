@@ -1,7 +1,7 @@
 ### Application
 app:
-  TNA_ADMIN_LOGIN: ${TNA_ADMIN_LOGIN}
-  TNA_ADMIN_PASSWORD: ${TNA_ADMIN_PASSWORD}
+  tna-admin-login: ${TNA_ADMIN_LOGIN}
+  tna-admin-password: ${TNA_ADMIN_PASSWORD}
 
 #### Server
 server:

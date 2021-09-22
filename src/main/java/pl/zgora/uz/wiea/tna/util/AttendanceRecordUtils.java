@@ -10,7 +10,7 @@ import pl.zgora.uz.wiea.tna.persistence.entity.ShiftEntity;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AttendanceRecordUtils {
 
-    static public AttendanceRecord mapAttendanceRecordEntityToAttendanceRecord(
+    public static AttendanceRecord mapAttendanceRecordEntityToAttendanceRecord(
             final AttendanceRecordEntity attendanceRecordEntity) {
         final EmployeeEntity employeeEntity = attendanceRecordEntity.getEmployeeEntity();
 
@@ -24,7 +24,7 @@ public class AttendanceRecordUtils {
                 .build();
     }
 
-    static public AttendanceRecordEntity mapAttendanceRecordToEntity(final AttendanceRecord attendanceRecord) {
+    public static AttendanceRecordEntity mapAttendanceRecordToEntity(final AttendanceRecord attendanceRecord) {
         return AttendanceRecordEntity.builder()
                 .id(attendanceRecord.getId())
                 .employeeEntity(EmployeeEntity.builder()

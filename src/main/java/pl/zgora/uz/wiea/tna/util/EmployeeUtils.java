@@ -8,7 +8,7 @@ import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EmployeeUtils {
 
-    static public Employee mapEmployeeEntityToEmployee(final EmployeeEntity employeeEntity) {
+    public static Employee mapEmployeeEntityToEmployee(final EmployeeEntity employeeEntity) {
         return Employee.builder()
                 .id(employeeEntity.getId())
                 .firstName(employeeEntity.getFirstName())
@@ -21,7 +21,7 @@ public class EmployeeUtils {
                 .build();
     }
 
-    static public EmployeeEntity mapEmployeeToEntity(final Employee employee) {
+    public static EmployeeEntity mapEmployeeToEntity(final Employee employee) {
         return EmployeeEntity.builder()
                 .id(employee.getId())
                 .firstName(employee.getFirstName())

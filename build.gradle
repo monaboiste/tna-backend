@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'co.uzzu.dotenv.gradle' version '1.1.0'
+    id 'idea'
     id 'java'
 }
 
@@ -9,67 +10,63 @@ group = 'pl.zgora.uz.wiea'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-    integrationTestImplementation.extendsFrom implementation
-    integrationTestRuntimeOnly.extendsFrom runtimeOnly
-}
-
 repositories {
     mavenCentral()
 }
 
-sourceSets {
-    integrationTest {
-        compileClasspath += sourceSets.main.output
-        runtimeClasspath += sourceSets.main.output
-    }
-}
-
-dependencies {
-    // spring boot starters
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-
-    // error messages
-    implementation 'me.alidg:errors-spring-boot-starter:1.4.0'
-
-    // preprocessor
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-
-    // test
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
-    integrationTestImplementation 'org.springframework.security:spring-security-test'
-
-    // test database TODO: to be replaced with postgresql
-    testImplementation 'com.h2database:h2'
-    integrationTestImplementation 'com.h2database:h2'
-
-    // database prod
-    runtimeOnly 'org.postgresql:postgresql'
-}
-
-test {
+tasks.withType(Test) {
     useJUnitPlatform()
 }
 
+sourceSets {
+    main {
+        java.srcDirs('./src/main/java')
+        resources.srcDirs('./src/main/resources')
+    }
+    test {
+        java.srcDirs('./src/test/java')
+        resources.srcDirs('./src/test/resources')
+    }
+    integrationTest {
+        java.srcDirs('./src/integrationTest/java')
+        resources.srcDirs('./src/integrationTest/resources')
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+idea {
+    module {
+        testSourceDirs += project.sourceSets.integrationTest.java.srcDirs
+        testSourceDirs += project.sourceSets.integrationTest.resources.srcDirs
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+tasks.processIntegrationTestResources.doFirst {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 task integrationTest(type: Test) {
-    description = 'Integration tests'
     group = 'verification'
+    description = 'Runs the integration tests.'
 
     testClassesDirs = sourceSets.integrationTest.output.classesDirs
     classpath = sourceSets.integrationTest.runtimeClasspath
-    include("**/*IntegrationTest.java")
-    outputs.upToDateWhen { false }
+    include '**/*IntegrationTest.class'
     mustRunAfter test
+}
+
+tasks.withType(Test).configureEach {
+    testLogging { events "passed", "skipped", "failed" }
+    outputs.upToDateWhen { false }
 }
 
 check.dependsOn integrationTest
@@ -86,4 +83,33 @@ bootRun {
             'POSTGRES_USER': env.POSTGRES_USER.value,
             'POSTGRES_PASSWORD': env.POSTGRES_PASSWORD.value
     ]
+}
+
+dependencies {
+    implementation(
+            'org.springframework.boot:spring-boot-starter-data-jpa',
+            'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-validation',
+            'org.springframework.boot:spring-boot-starter-security',
+
+            'me.alidg:errors-spring-boot-starter:1.4.0'
+    )
+    compileOnly (
+            'org.projectlombok:lombok'
+    )
+    annotationProcessor(
+            'org.projectlombok:lombok',
+            'org.springframework.boot:spring-boot-configuration-processor'
+    )
+    runtimeOnly(
+            'org.postgresql:postgresql'
+    )
+    testImplementation(
+            'org.springframework.boot:spring-boot-starter-test',
+            'org.springframework.security:spring-security-test',
+    )
+    testRuntimeOnly(
+            // test database TODO: to be replaced with postgresql
+            'com.h2database:h2'
+    )
 }

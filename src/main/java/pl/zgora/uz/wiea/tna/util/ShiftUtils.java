@@ -8,7 +8,7 @@ import pl.zgora.uz.wiea.tna.persistence.entity.ShiftEntity;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ShiftUtils {
 
-    static public Shift mapShiftEntityToShift(final ShiftEntity shiftEntity) {
+    public static Shift mapShiftEntityToShift(final ShiftEntity shiftEntity) {
         return Shift.builder()
                 .id(shiftEntity.getId())
                 .date(shiftEntity.getDate())
@@ -16,7 +16,7 @@ public class ShiftUtils {
                 .build();
     }
 
-    static public ShiftEntity mapShiftToEntity(final Shift shift) {
+    public static ShiftEntity mapShiftToEntity(final Shift shift) {
         return ShiftEntity.builder()
                 .id(shift.getId())
                 .date(shift.getDate())

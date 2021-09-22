@@ -65,8 +65,7 @@ public class EmployeeService {
         final String lastThreeContractNumbers = employeeEntity.getContractId()
                 .substring(employeeEntity.getContractId().length() - 3);
 
-        final String username = firstLetterOfName + lastname + lastThreeContractNumbers;
-        return username;
+        return firstLetterOfName + lastname + lastThreeContractNumbers;
     }
 
     private String generateDefaultPassword() {

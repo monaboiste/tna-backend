@@ -1,7 +1,11 @@
 package pl.zgora.uz.wiea.tna.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import pl.zgora.uz.wiea.tna.model.AttendanceRecord;
 import pl.zgora.uz.wiea.tna.persistence.entity.AttendanceRecordEntity;
 import pl.zgora.uz.wiea.tna.service.AttendanceRecordService;
@@ -29,12 +33,11 @@ public class AttendanceRecordController {
     }
 
     @GetMapping
-    List<AttendanceRecord> fetchAllAttendanceRecords() {
+    public List<AttendanceRecord> fetchAllAttendanceRecords() {
         final List<AttendanceRecordEntity> attendanceRecordEntities
                 = attendanceRecordService.fetchAllAttendanceRecords();
-        final List<AttendanceRecord> attendanceRecords = attendanceRecordEntities.parallelStream()
+        return attendanceRecordEntities.parallelStream()
                 .map(AttendanceRecordUtils::mapAttendanceRecordEntityToAttendanceRecord)
                 .collect(Collectors.toList());
-        return attendanceRecords;
     }
 }

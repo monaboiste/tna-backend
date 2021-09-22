@@ -3,7 +3,14 @@ package pl.zgora.uz.wiea.tna.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import pl.zgora.uz.wiea.tna.model.User;
 import pl.zgora.uz.wiea.tna.persistence.entity.UserEntity;
 import pl.zgora.uz.wiea.tna.service.UserService;
@@ -25,19 +32,18 @@ public class UserController {
 
     @GetMapping("/current")
     public User fetchCurrentUser(final Principal principal) {
-        final User user = mapUserEntityToUser(
-                userService.fetchCurrentUserByUsername(principal.getName()));
-        return user;
+        final UserEntity userEntity
+                = userService.fetchCurrentUserByUsername(principal.getName());
+        return mapUserEntityToUser(userEntity);
     }
 
 
     @GetMapping
     public List<User> fetchAllUsers() {
         final List<UserEntity> userEntities = userService.fetchAllUsers();
-        final List<User> users = userEntities.parallelStream()
+        return userEntities.parallelStream()
                 .map(UserUtils::mapUserEntityToUser)
                 .collect(Collectors.toList());
-        return users;
     }
 
     @GetMapping("/{id}")

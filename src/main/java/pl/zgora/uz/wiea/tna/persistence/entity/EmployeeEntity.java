@@ -1,10 +1,25 @@
 package pl.zgora.uz.wiea.tna.persistence.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -61,8 +76,8 @@ public class EmployeeEntity {
 
     @PreRemove
     private void preRemove() {
-        for (AttendanceRecordEntity record : employeeAttendanceRecordEntities) {
-            record.setEmployeeEntity(null);
+        for (AttendanceRecordEntity recordEntity : employeeAttendanceRecordEntities) {
+            recordEntity.setEmployeeEntity(null);
         }
     }
 }
