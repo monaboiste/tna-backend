@@ -50,6 +50,10 @@ configurations {
     integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
+tasks.processResources.doFirst {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
 tasks.processIntegrationTestResources.doFirst {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
