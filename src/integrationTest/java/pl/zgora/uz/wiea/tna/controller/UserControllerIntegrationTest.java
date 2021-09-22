@@ -76,7 +76,7 @@ class UserControllerIntegrationTest {
 
         assertAll(
                 () -> assertEquals(HttpStatus.OK.value(), response.getStatus()),
-                () -> assertEquals(1L, user.getId()),
+                () -> assertEquals(id, user.getId()),
                 () -> assertEquals("test1", user.getUsername()),
                 () -> assertEquals("test1", user.getPassword())
         );
