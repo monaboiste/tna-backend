@@ -103,6 +103,8 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-validation',
             'org.springframework.boot:spring-boot-starter-security',
 
+            'org.liquibase:liquibase-core',
+
             'me.alidg:errors-spring-boot-starter:1.4.0'
     )
     compileOnly (
@@ -117,7 +119,7 @@ dependencies {
     )
     testImplementation(
             'org.springframework.boot:spring-boot-starter-test',
-            'org.springframework.security:spring-security-test',
+            'org.springframework.security:spring-security-test'
     )
     testRuntimeOnly(
             // test database TODO: to be replaced with postgresql
