@@ -4,6 +4,23 @@ function as a stand-alone system, which features:
 - keeping records of employees' working hours,
 - calculating working time on a monthly basis.  
 
+# Demo
+<p align="center">
+  <img src="https://i.ibb.co/gP1z341/demo-employee-dashboard.png">
+    Employee management dashboard
+    <br><br>
+  <img src="https://i.ibb.co/pzX0h3R/demo-employee-edit.png">
+    Work hours - manual edit
+</p>
+
+Demo is deployed at: [https://tna-system-backend.herokuapp.com](https://tna-system-backend.herokuapp.com). 
+You can view Application which uses tna-backend [here](https://tna-system.herokuapp.com).  
+Credentials to test admin account:
+```
+username: ttest001
+password: test
+```
+Actually, you can log in using any account listed in _Pracownicy_ page. Default password is _test_ for every account. 
 ___
 ### Project's functional requirements
 ##### User accounts related
@@ -29,7 +46,8 @@ ___
 * Spring Security
 * JUnit
 * Mockito
-* MySQL
+* PostgreSQL
+* Liquibase
 
 ## Getting started
 ### Prerequisites
