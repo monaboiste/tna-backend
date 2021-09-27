@@ -97,10 +97,13 @@ Gradle will build project and start Tomcat Server on your localhost. Base URL of
 Generate sample data:  
 To auto-generate sample data, run Spring Boot application as follows:
 ```sh
-./gradlew bootRun -Dspring.jpa.hibernate.ddl-auto=update
+./gradlew bootRun \
+    -Dspring.datasource.data="file:///$PWD/scripts/sample-data.sql" \
+    -Dspring.datasource.initialization-mode=always \
+    -Dspring.jpa.hibernate.ddl-auto=update
 ```
 
-You can also use bash scripts provided in ``scripts/`` directory:
+Alternatively you can use bash scripts provided in ``scripts/`` directory:
 ```sh
 ./generate-employees.sh -u <username>:<password> -h <host_addr> # Generate some employee data
 ./generate-attendance-records.sh -u <username>:<password> -h <host_addr> # Generate attendance data
