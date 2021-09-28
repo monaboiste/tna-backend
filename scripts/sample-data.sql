@@ -133,3 +133,7 @@ INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALU
 INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '21:58:02'), (select current_date + 4 + time '06:00:00'), 6, 15);
 INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '22:59:22'), (select current_date + 4 + time '07:48:04'), 7, 15);
 INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '23:57:08'), (select current_date + 4 + time '06:00:02'), 11, 15);
+
+SELECT setval('users_id_seq', (SELECT max(id) FROM users));
+SELECT setval('shifts_id_seq', (SELECT max(id) FROM shifts));
+SELECT setval('attendance_records_id_seq', (SELECT max(id) FROM attendance_records));
