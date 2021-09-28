@@ -22,13 +22,13 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import java.util.List;
 
-@Entity
-@Table(name = "employees")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "employees")
 public class EmployeeEntity {
 
     /**

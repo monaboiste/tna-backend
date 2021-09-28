@@ -18,13 +18,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.time.OffsetDateTime;
 
-@Entity
-@Table(name = "attendance_records")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "attendance_records")
 public class AttendanceRecordEntity {
 
     @Id

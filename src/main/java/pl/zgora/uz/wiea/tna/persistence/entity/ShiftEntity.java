@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,13 +20,13 @@ import javax.persistence.Table;
 import java.sql.Date;
 import java.util.List;
 
-@Entity
-@Table(name = "shifts")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "shifts")
 public class ShiftEntity {
 
     @Id
@@ -37,6 +38,7 @@ public class ShiftEntity {
     private Date date;
 
     @Column(name = "timeOfDay", nullable = true)
+    @Type(type = "pl.zgora.uz.wiea.tna.persistence.db.postresql.PostgreSQLEnumType")
     @Enumerated(EnumType.STRING)
     private TimeOfDay timeOfDay;
 
