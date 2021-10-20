@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.sql.Date;
 import java.util.List;
@@ -30,7 +31,13 @@ import java.util.List;
 public class ShiftEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name="shifts_id_seq",
+            sequenceName="shifts_id_seq",
+            allocationSize=1)
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator="shifts_id_seq")
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
