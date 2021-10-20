@@ -1,3 +1,12 @@
+TRUNCATE TABLE attendance_records CASCADE;
+TRUNCATE TABLE shifts CASCADE;
+TRUNCATE TABLE employees CASCADE;
+TRUNCATE TABLE users CASCADE;
+
+SELECT setval('users_id_seq', 1);
+SELECT setval('shifts_id_seq', 1);
+SELECT setval('attendance_records_id_seq', 1);
+
 INSERT INTO users (id, username, role, password) VALUES (1, 'ttarasenko678', 'USER', '$2a$10$dpSzo0xON4id.hA2DtjvtOm.2Yu68Fr6CNQjqQmneP58Vqhwx/kpu');
 INSERT INTO users (id, username, role, password) VALUES (2, 'mgalczynski699', 'USER', '$2a$12$B9i.1bO/W/vdFRkFayFbmeOx8alU0oW2tMeJQQyng765ZH5Yav.va');
 INSERT INTO users (id, username, role, password) VALUES (3, 'mzateus669', 'USER', '$2a$12$4YEytxcYxEWg2SyKnPrUu.BdGo01ldD1DEzfOP/joIQiZeSpO/gWW');
@@ -57,82 +66,82 @@ INSERT INTO shifts (id, date, time_of_day) VALUES (14, (SELECT current_date + 4)
 INSERT INTO shifts (id, date, time_of_day) VALUES (15, (SELECT current_date + 4), 'NIGHT');
 
 -- --------------- mon
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '06:00:02'), (select current_date + time '14:00:08'), 1, 1);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '05:58:02'), (select current_date + time '14:00:00'), 2, 1);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '05:59:22'), (select current_date + time '14:10:04'), 3, 1);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '05:59:22'), (select current_date + time '14:10:04'), 10, 1);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '06:00:02'), (select current_date - 9 + time '14:00:08'), 1, 1);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '05:58:02'), (select current_date - 9 + time '14:00:00'), 2, 1);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '05:59:22'), (select current_date - 9 + time '14:10:04'), 3, 1);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '05:59:22'), (select current_date - 9 + time '14:10:04'), 10, 1);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '14:00:00'), (select current_date + time '21:58:02'), 12, 2);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '13:57:08'), (select current_date + time '22:00:02'), 4, 2);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '14:00:00'), (select current_date + time '21:58:02'), 5, 2);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '13:48:04'), (select current_date + time '22:59:22'), 6, 2);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '14:00:00'), (select current_date - 9 + time '21:58:02'), 12, 2);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '13:57:08'), (select current_date - 9 + time '22:00:02'), 4, 2);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '14:00:00'), (select current_date - 9 + time '21:58:02'), 5, 2);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '13:48:04'), (select current_date - 9 + time '22:59:22'), 6, 2);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '22:00:02'), (select current_date + time '07:57:08'), 5, 3);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '21:58:02'), (select current_date + time '06:00:00'), 6, 3);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '22:59:22'), (select current_date + time '07:48:04'), 7, 3);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + time '23:57:08'), (select current_date + time '06:00:02'), 11, 3);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '22:00:02'), (select current_date - 9 + 1 + time '07:57:08'), 5, 3);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '21:58:02'), (select current_date - 9 + 1 + time '06:00:00'), 6, 3);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '22:59:22'), (select current_date - 9 + 1 + time '07:48:04'), 7, 3);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + time '23:57:08'), (select current_date - 9 + 1 + time '06:00:02'), 11, 3);
 -- --------------- tue
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '06:00:02'), (select current_date + 1 + time '14:00:08'), 1, 4);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '05:58:02'), (select current_date + 1 + time '14:00:00'), 2, 4);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '06:00:02'), (select current_date + 1 + time '14:00:08'), 8, 4);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '05:58:02'), (select current_date + 1 + time '14:00:00'), 9, 4);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '05:59:22'), (select current_date + 1 + time '14:10:04'), 10, 4);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '06:00:02'), (select current_date - 9 + 1 + time '14:00:08'), 1, 4);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '05:58:02'), (select current_date - 9 + 1 + time '14:00:00'), 2, 4);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '06:00:02'), (select current_date - 9 + 1 + time '14:00:08'), 8, 4);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '05:58:02'), (select current_date - 9 + 1 + time '14:00:00'), 9, 4);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '05:59:22'), (select current_date - 9 + 1 + time '14:10:04'), 10, 4);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '14:00:00'), (select current_date + 1 + time '21:58:02'), 12, 5);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '13:57:08'), (select current_date + 1 + time '22:00:02'), 4, 5);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '14:00:00'), (select current_date + 1 + time '21:58:02'), 5, 5);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '13:48:04'), (select current_date + 1 + time '22:59:22'), 6, 5);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '14:00:00'), (select current_date - 9 + 1 + time '21:58:02'), 12, 5);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '13:57:08'), (select current_date - 9 + 1 + time '22:00:02'), 4, 5);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '14:00:00'), (select current_date - 9 + 1 + time '21:58:02'), 5, 5);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '13:48:04'), (select current_date - 9 + 1 + time '22:59:22'), 6, 5);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '22:00:02'), (select current_date + 1 + time '07:57:08'), 5, 6);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '21:58:02'), (select current_date + 1 + time '06:00:00'), 6, 6);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '22:59:22'), (select current_date + 1 + time '07:48:04'), 7, 6);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 1 + time '23:57:08'), (select current_date + 1 + time '06:00:02'), 11, 6);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '22:00:02'), (select current_date - 9 + 2 + time '07:57:08'), 5, 6);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '21:58:02'), (select current_date - 9 + 2 + time '06:00:00'), 6, 6);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '22:59:22'), (select current_date - 9 + 2 + time '07:48:04'), 7, 6);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 1 + time '23:57:08'), (select current_date - 9 + 2 + time '06:00:02'), 11, 6);
 -- --------------- wed
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '06:00:02'), (select current_date + 2 + time '14:00:08'), 1, 7);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '05:58:02'), (select current_date + 2 + time '14:00:00'), 2, 7);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '06:00:02'), (select current_date + 2 + time '14:00:08'), 8, 7);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '05:58:02'), (select current_date + 2 + time '14:00:00'), 9, 7);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '05:59:22'), (select current_date + 2 + time '14:10:04'), 10, 7);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '06:00:02'), (select current_date - 9 + 2 + time '14:00:08'), 1, 7);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '05:58:02'), (select current_date - 9 + 2 + time '14:00:00'), 2, 7);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '06:00:02'), (select current_date - 9 + 2 + time '14:00:08'), 8, 7);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '05:58:02'), (select current_date - 9 + 2 + time '14:00:00'), 9, 7);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '05:59:22'), (select current_date - 9 + 2 + time '14:10:04'), 10, 7);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '14:00:00'), (select current_date + 2 + time '21:58:02'), 12, 8);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '13:57:08'), (select current_date + 2 + time '22:00:02'), 4, 8);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '14:00:00'), (select current_date + 2 + time '21:58:02'), 5, 8);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '13:48:04'), (select current_date + 2 + time '22:59:22'), 6, 8);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '14:00:00'), (select current_date - 9 + 2 + time '21:58:02'), 12, 8);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '13:57:08'), (select current_date - 9 + 2 + time '22:00:02'), 4, 8);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '14:00:00'), (select current_date - 9 + 2 + time '21:58:02'), 5, 8);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '13:48:04'), (select current_date - 9 + 2 + time '22:59:22'), 6, 8);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '22:00:02'), (select current_date + 2 + time '07:57:08'), 5, 9);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '21:58:02'), (select current_date + 2 + time '06:00:00'), 6, 9);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '22:59:22'), (select current_date + 2 + time '07:48:04'), 7, 9);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 2 + time '23:57:08'), (select current_date + 2 + time '06:00:02'), 11, 9);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '22:00:02'), (select current_date - 9 + 4 + time '07:57:08'), 5, 9);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '21:58:02'), (select current_date - 9 + 4 + time '06:00:00'), 6, 9);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '22:59:22'), (select current_date - 9 + 4 + time '07:48:04'), 7, 9);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 2 + time '23:57:08'), (select current_date - 9 + 4 + time '06:00:02'), 11, 9);
 -- --------------- thu
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '05:58:02'), (select current_date + 3 + time '14:00:00'), 2, 10);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '05:59:22'), (select current_date + 3 + time '14:10:04'), 3, 10);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '06:00:02'), (select current_date + 3 + time '14:00:08'), 8, 10);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '05:58:02'), (select current_date + 3 + time '14:00:00'), 9, 10);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '05:59:22'), (select current_date + 3 + time '14:10:04'), 10, 10);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '05:58:02'), (select current_date - 9 + 3 + time '14:00:00'), 2, 10);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '05:59:22'), (select current_date - 9 + 3 + time '14:10:04'), 3, 10);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '06:00:02'), (select current_date - 9 + 3 + time '14:00:08'), 8, 10);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '05:58:02'), (select current_date - 9 + 3 + time '14:00:00'), 9, 10);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '05:59:22'), (select current_date - 9 + 3 + time '14:10:04'), 10, 10);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '14:00:00'), (select current_date + 3 + time '21:58:02'), 12, 11);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '13:57:08'), (select current_date + 3 + time '22:00:02'), 4, 11);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '14:00:00'), (select current_date + 3 + time '21:58:02'), 5, 11);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '13:48:04'), (select current_date + 3 + time '22:59:22'), 6, 11);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '14:00:00'), (select current_date - 9 + 3 + time '21:58:02'), 12, 11);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '13:57:08'), (select current_date - 9 + 3 + time '22:00:02'), 4, 11);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '14:00:00'), (select current_date - 9 + 3 + time '21:58:02'), 5, 11);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '13:48:04'), (select current_date - 9 + 3 + time '22:59:22'), 6, 11);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '22:00:02'), (select current_date + 3 + time '07:57:08'), 5, 12);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '21:58:02'), (select current_date + 3 + time '06:00:00'), 6, 12);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 3 + time '23:57:08'), (select current_date + 3 + time '06:00:02'), 11, 12);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '22:00:02'), (select current_date - 9 + 4 + time '07:57:08'), 5, 12);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '21:58:02'), (select current_date - 9 + 4 + time '06:00:00'), 6, 12);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 3 + time '23:57:08'), (select current_date - 9 + 4 + time '06:00:02'), 11, 12);
 -- --------------- fri
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '06:00:02'), (select current_date + 4 + time '14:00:08'), 1, 13);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '05:59:22'), (select current_date + 4 + time '14:10:04'), 3, 13);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '06:00:02'), (select current_date + 4 + time '14:00:08'), 8, 13);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '05:58:02'), (select current_date + 4 + time '14:00:00'), 9, 13);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '05:59:22'), (select current_date + 4 + time '14:10:04'), 10, 13);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '06:00:02'), (select current_date - 9 + 4 + time '14:00:08'), 1, 13);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '05:59:22'), (select current_date - 9 + 4 + time '14:10:04'), 3, 13);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '06:00:02'), (select current_date - 9 + 4 + time '14:00:08'), 8, 13);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '05:58:02'), (select current_date - 9 + 4 + time '14:00:00'), 9, 13);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '05:59:22'), (select current_date - 9 + 4 + time '14:10:04'), 10, 13);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '14:00:00'), (select current_date + 4 + time '21:58:02'), 12, 14);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '13:57:08'), (select current_date + 4 + time '22:00:02'), 4, 14);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '13:48:04'), (select current_date + 4 + time '22:59:22'), 6, 14);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '14:00:00'), (select current_date - 9 + 4 + time '21:58:02'), 12, 14);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '13:57:08'), (select current_date - 9 + 4 + time '22:00:02'), 4, 14);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '13:48:04'), (select current_date - 9 + 4 + time '22:59:22'), 6, 14);
 
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '22:00:02'), (select current_date + 4 + time '07:57:08'), 5, 15);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '21:58:02'), (select current_date + 4 + time '06:00:00'), 6, 15);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '22:59:22'), (select current_date + 4 + time '07:48:04'), 7, 15);
-INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date + 4 + time '23:57:08'), (select current_date + 4 + time '06:00:02'), 11, 15);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '22:00:02'), (select current_date - 9 + 5 + time '07:57:08'), 5, 15);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '21:58:02'), (select current_date - 9 + 5 + time '06:00:00'), 6, 15);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '22:59:22'), (select current_date - 9 + 5 + time '07:48:04'), 7, 15);
+INSERT INTO attendance_records (entered_at, left_at, employee_id, shift_id) VALUES ((select current_date - 9 + 4 + time '23:57:08'), (select current_date - 9 + 5 + time '06:00:02'), 11, 15);
 
 SELECT setval('users_id_seq', (SELECT max(id) FROM users));
 SELECT setval('shifts_id_seq', (SELECT max(id) FROM shifts));
