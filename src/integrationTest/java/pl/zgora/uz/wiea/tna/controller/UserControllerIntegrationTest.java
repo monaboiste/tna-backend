@@ -218,7 +218,7 @@ class UserControllerIntegrationTest {
 
     @Test
     @DisplayName("should create user with default role")
-    void shouldReturnBadRequestWhenUserWithoutRoleIsPassed() throws Exception {
+    void shouldCreateUserWithDefaultRole() throws Exception {
         // given
         String invalidRequestJson = userWithDefaultRole().jsonRequest();
         // when
