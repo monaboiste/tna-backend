@@ -3,6 +3,7 @@ package pl.zgora.uz.wiea.tna.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.zgora.uz.wiea.tna.model.AttendanceRecordExitTime;
 import pl.zgora.uz.wiea.tna.persistence.entity.AttendanceRecordEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.EmployeeEntity;
 import pl.zgora.uz.wiea.tna.persistence.entity.ShiftEntity;
@@ -132,5 +133,30 @@ public class AttendanceRecordService {
             return TimeOfDay.NIGHT;
         }
         return null;
+    }
+
+    @Transactional
+    public AttendanceRecordEntity updateExitTimeOfRecentAttendance(
+            final long employeeId,
+            final AttendanceRecordExitTime attendanceRecordExitTime) {
+        if (!employeeService.employeeExistsById(employeeId)) {
+            throw new EmployeeNotFoundException();
+        }
+        AttendanceRecordEntity attendanceRecord = getLastAttendanceRecordFor(employeeId);
+        attendanceRecord.setLeftAt(attendanceRecordExitTime.getLeftAt());
+        long elapsedTimePerShift = calculateElapsedTimePerShift(attendanceRecord);
+        attendanceRecord.setElapsedTimePerShiftInMinutes(elapsedTimePerShift);
+        attendanceRecordRepository.saveAndFlush(attendanceRecord);
+        return attendanceRecord;
+    }
+
+    public AttendanceRecordEntity getLastAttendanceRecordFor(final long employeeId) {
+        List<AttendanceRecordEntity> records
+                = attendanceRecordRepository.findByEmployeeEntityId(employeeId);
+        return records.stream().reduce((lhs, rhs) ->
+                lhs.getEnteredAt().compareTo(rhs.getEnteredAt()) == 1
+                        ? lhs
+                        : rhs
+        ).orElseThrow();
     }
 }

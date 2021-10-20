@@ -100,4 +100,15 @@ public class EmployeeController {
     public void deleteEmployee(@PathVariable("employeeId") long employeeId) {
         employeeService.deleteEmployee(employeeId);
     }
+
+    @PatchMapping("/{employeeId}/attendance/exit-time")
+    public AttendanceRecord updateExitTimeOfRecentAttendance(
+            @PathVariable long employeeId,
+            @RequestBody @Valid final AttendanceRecordExitTime attendanceRecordExitTime) {
+        AttendanceRecordEntity attendanceRecordEntity
+                = attendanceRecordService.updateExitTimeOfRecentAttendance(
+                        employeeId, attendanceRecordExitTime);
+        return AttendanceRecordUtils
+                .mapAttendanceRecordEntityToAttendanceRecord(attendanceRecordEntity);
+    }
 }
