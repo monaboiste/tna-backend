@@ -33,7 +33,7 @@ public class ShiftController {
     @GetMapping
     public List<Shift>  fetchAllShifts() {
         final List<ShiftEntity> shiftEntities = shiftService.fetchAllShifts();
-        return shiftEntities.parallelStream()
+        return shiftEntities.stream()
                 .map(ShiftUtils::mapShiftEntityToShift)
                 .collect(Collectors.toList());
     }

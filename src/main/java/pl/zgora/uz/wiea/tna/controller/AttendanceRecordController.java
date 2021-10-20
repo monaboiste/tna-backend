@@ -36,7 +36,7 @@ public class AttendanceRecordController {
     public List<AttendanceRecord> fetchAllAttendanceRecords() {
         final List<AttendanceRecordEntity> attendanceRecordEntities
                 = attendanceRecordService.fetchAllAttendanceRecords();
-        return attendanceRecordEntities.parallelStream()
+        return attendanceRecordEntities.stream()
                 .map(AttendanceRecordUtils::mapAttendanceRecordEntityToAttendanceRecord)
                 .collect(Collectors.toList());
     }

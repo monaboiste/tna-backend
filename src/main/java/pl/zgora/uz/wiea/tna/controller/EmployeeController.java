@@ -46,7 +46,7 @@ public class EmployeeController {
     @GetMapping
     public List<Employee> fetchAllEmployees() {
         final List<EmployeeEntity> employeeEntities = employeeService.fetchAllEmployees();
-        return employeeEntities.parallelStream()
+        return employeeEntities.stream()
                 .map(EmployeeUtils::mapEmployeeEntityToEmployee)
                 .collect(Collectors.toList());
     }
@@ -61,7 +61,7 @@ public class EmployeeController {
     public List<AttendanceRecord> fetchAllEmployeesAttendanceRecords(@PathVariable long employeeId) {
         final List<AttendanceRecordEntity> attendanceRecordEntities
                 = attendanceRecordService.fetchAllAttendanceRecordsByEmployeeId(employeeId);
-        return attendanceRecordEntities.parallelStream()
+        return attendanceRecordEntities.stream()
                 .map(AttendanceRecordUtils::mapAttendanceRecordEntityToAttendanceRecord)
                 .collect(Collectors.toList());
     }

@@ -41,7 +41,7 @@ public class UserController {
     @GetMapping
     public List<User> fetchAllUsers() {
         final List<UserEntity> userEntities = userService.fetchAllUsers();
-        return userEntities.parallelStream()
+        return userEntities.stream()
                 .map(UserUtils::mapUserEntityToUser)
                 .collect(Collectors.toList());
     }

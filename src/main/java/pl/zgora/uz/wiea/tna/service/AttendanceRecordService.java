@@ -51,8 +51,7 @@ public class AttendanceRecordService {
         List<AttendanceRecordEntity> attendanceRecordEntities
                 = attendanceRecordRepository.findByEmployeeEntityId(employeeId);
 
-        attendanceRecordEntities.parallelStream()
-                .forEach(e -> {
+        attendanceRecordEntities.forEach(e -> {
                     long elapsedTimePerShift = calculateElapsedTimePerShift(e);
                     e.setElapsedTimePerShiftInMinutes(elapsedTimePerShift);
                 });
@@ -62,8 +61,7 @@ public class AttendanceRecordService {
     public List<AttendanceRecordEntity> fetchAllAttendanceRecords() {
         List<AttendanceRecordEntity> attendanceRecordEntities = attendanceRecordRepository.findAll();
 
-        attendanceRecordEntities.parallelStream()
-                .forEach(e -> {
+        attendanceRecordEntities.forEach(e -> {
                     long elapsedTimePerShift = calculateElapsedTimePerShift(e);
                     e.setElapsedTimePerShiftInMinutes(elapsedTimePerShift);
                 });
