@@ -63,7 +63,7 @@ public class EmployeeEntity {
     @MapsId
     @OneToOne(
             cascade = CascadeType.REMOVE,
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             optional = false,
             orphanRemoval = true)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
