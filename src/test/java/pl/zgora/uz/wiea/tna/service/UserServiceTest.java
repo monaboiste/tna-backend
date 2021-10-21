@@ -13,8 +13,7 @@ import pl.zgora.uz.wiea.tna.persistence.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -24,10 +23,10 @@ import static org.mockito.Mockito.verify;
 class UserServiceTest {
 
     @Mock
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @InjectMocks
-    private UserService userService;
+    UserService userService;
 
     @Test
     void shouldFetchAllUsers() {
@@ -43,12 +42,7 @@ class UserServiceTest {
 
         List<UserEntity> actual = userService.fetchAllUsers();
 
-        assertAll(
-                () -> assertEquals(expected.size(), actual.size()),
-                () -> assertEquals(expected.get(0).getId(), actual.get(0).getId()),
-                () -> assertEquals(expected.get(0).getUsername(), actual.get(0).getUsername()),
-                () -> assertEquals(expected.get(0).getPassword(), actual.get(0).getPassword())
-        );
+        assertThat(actual).containsAll(expected);
         verify(userRepository, times(1)).findAll();
     }
 
@@ -65,11 +59,8 @@ class UserServiceTest {
 
         final UserEntity actual = userService.fetchUserById(id);
 
-        assertAll(
-                () -> assertEquals(expected.getId(), actual.getId()),
-                () -> assertEquals(expected.getUsername(), actual.getUsername()),
-                () -> assertEquals(expected.getPassword(), actual.getPassword())
-        );
+        assertThat(actual).usingRecursiveComparison()
+                .isEqualTo(expected);
         verify(userRepository, times(1)).findById(id);
     }
 }
