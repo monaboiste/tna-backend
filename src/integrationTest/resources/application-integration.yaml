@@ -7,6 +7,9 @@ spring:
     datasource:
         driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
         url: jdbc:tc:postgresql:///integration
+    jpa:
+        hibernate:
+            ddl-auto: validate
     liquibase:
         drop-first: true
     test:

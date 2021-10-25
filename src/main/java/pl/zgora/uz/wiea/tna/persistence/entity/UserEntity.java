@@ -33,7 +33,7 @@ public class UserEntity {
             allocationSize=1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator="users_id_seq")
+            generator = "users_id_seq")
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
@@ -43,7 +43,7 @@ public class UserEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", columnDefinition = "user_role", nullable = false)
     @Type(type = "pl.zgora.uz.wiea.tna.persistence.db.postresql.PostgreSQLEnumType")
     @Enumerated(EnumType.STRING)
     private Role role;

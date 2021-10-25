@@ -37,15 +37,15 @@ public class ShiftEntity {
             allocationSize=1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator="shifts_id_seq")
+            generator = "shifts_id_seq")
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
-    @Column(name = "date", nullable = true)
+    @Column(name = "date")
     private Date date;
 
-    @Column(name = "timeOfDay", nullable = true)
-    @Type(type = "pl.zgora.uz.wiea.tna.persistence.db.postresql.PostgreSQLEnumType")
+    @Column(name = "timeOfDay", columnDefinition = "time_of_day")
+//    @Type(type = "pl.zgora.uz.wiea.tna.persistence.db.postresql.PostgreSQLEnumType")
     @Enumerated(EnumType.STRING)
     private TimeOfDay timeOfDay;
 

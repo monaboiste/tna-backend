@@ -51,13 +51,13 @@ public class EmployeeEntity {
     @Column(name = "contract_id", unique = true, nullable = false)
     private String contractId;
 
-    @Column(name = "street", nullable = true)
+    @Column(name = "street")
     private String street;
 
-    @Column(name = "post_code", nullable = true)
+    @Column(name = "post_code", columnDefinition = "zipcode")
     private String postCode;
 
-    @Column(name = "city", nullable = true)
+    @Column(name = "city")
     private String city;
 
     @MapsId

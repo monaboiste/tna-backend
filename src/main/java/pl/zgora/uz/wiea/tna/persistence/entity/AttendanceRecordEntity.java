@@ -36,7 +36,7 @@ public class AttendanceRecordEntity {
             allocationSize=1)
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator="attendance_records_id_seq")
+            generator = "attendance_records_id_seq")
     @Column(name = "id", unique = true, nullable = false)
     private Long id;
 
@@ -51,7 +51,7 @@ public class AttendanceRecordEntity {
     @Column(name = "entered_at", nullable = false)
     private OffsetDateTime enteredAt;
 
-    @Column(name = "left_at", nullable = true)
+    @Column(name = "left_at")
     private OffsetDateTime leftAt;
 
     @Transient
