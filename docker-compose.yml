@@ -5,6 +5,8 @@ services:
   db:
     image: postgres:alpine
     restart: always
+    healthcheck:
+      test: psql postgres --command "select 1" -U postgres
     environment:
       - "POSTGRES_USER=${POSTGRES_USER}"
       - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
